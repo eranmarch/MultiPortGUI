@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MultiPortBreakDown
@@ -10,66 +11,67 @@ namespace MultiPortBreakDown
     {
         /* Globals */
         public enum p_type { SLOW, SEQUENTIAL, RANDOM, SPRINT };
-        public enum fpga_field { G, D, A, B, C, ABC, ABCG };
-
-        /* Class fields */
-        public string Name { get; set; }
-        public bool IsValid { get; set; }
-        public p_type Type { get; set; }
-
-        public int Address { get; set; }
-        public int MAIS { get; set; }
-        public int LSB { get; set; }
-        public int MSB { get; set; }
-        
-        public fpga_field FPGA { get; set; }
-        public string Init { get; set; }
-        public string Comment { get; set; }
-        public string Group { get; set; }
-        public List<PortEntry> Fields { get; set; }
-        
-        public bool IsComment { get; set; }
-        public string Reason { get; set; }
-        public int Index { get; set; }
-        public int SecondaryIndex { get; set; }
-
         public static string pattern = @"^[ \t]*\(([a-zA-Z][a-zA-Z0-9_]*)[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([0124])[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([a-zA-Z_]+)[ \t]*,[ \t]*([a-zA-Z_]+)[ \t]*,[ \t]*(\w+)[ \t]*\)[ \t]*,[ \t]*(--[ \t]*(.*)[ \t]*)*";
         public static string final_pattern = @"^[ \t]*\(([a-zA-Z][a-zA-Z0-9_]*)[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([0124])[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([a-zA-Z_]+)[ \t]*,[ \t]*([a-zA-Z_]+)[ \t]*,[ \t]*(\w+)[ \t]*\)[ \t]*(--[ \t]*(.*)[ \t]*)*";
 
-        /* Constructors */
-        public PortEntry() : this("", -1, 0, 0, 31, p_type.RD, fpga_field.G, "", "", "") { }
+        /* Class fields */
+        public string Name { get; set; }
+        public bool ValidField { get; set; }
+        public p_type Type { get; set; }
+        public char R_W { get; set; }
+        public int Data_size { get; set; }
+        public char Bank { get; set; }
+        public string Memory_size { get; set; }
+        public int Memory_section { get; set; }
+        public bool Relative_address { get; set; }
+        public int Priority { get; set; }
+        public char Anable_emerge { get; set; }
+        public bool Read_bk_address { get; set; }
 
-        public PortEntry(string Name, int Address, int MAIS, int LSB, int MSB,
-            p_type Type, fpga_field FPGA, string Init, string Comment, string Group)
+        public string Comment { get; set; }
+        public bool IsComment { get; set; }
+        public bool IsValid { get; set; }
+        public string Reason { get; set; }
+        public int Index { get; set; }
+
+        /* Constructors */
+        public PortEntry() : this("", false, p_type.SLOW, 'R', 16, 'A', "full", 1, true, 99, 'N', false, "") { }
+
+        public PortEntry(string Name, bool ValidField, p_type Type, char R_W, int Data_size,
+            char Bank, string Memory_size, int Memory_section, bool Relative_address,
+            int Priority, char Anable_emerge, bool Read_bk_address, string Comment)
         {
             this.Name = Name;
-            this.Address = Address;
-            this.MAIS = MAIS;
-            this.LSB = LSB;
-            this.MSB = MSB;
+            this.ValidField = ValidField;
             this.Type = Type;
-            this.FPGA = FPGA;
-            this.Init = Init;
+            this.R_W = R_W;
+            this.Data_size = Data_size;
+            this.Type = Type;
+            this.Bank = Bank;
+            this.Memory_size = Memory_size;
+            this.Memory_section = Memory_section;
+            this.Relative_address = Relative_address;
+            this.Priority = Priority;
+            this.Anable_emerge = Anable_emerge;
+            this.Read_bk_address = Read_bk_address;
             this.Comment = Comment;
-            this.Group = Group;
-            Fields = new List<PortEntry>();
             IsValid = true;
             IsComment = false;
             Reason = "";
             Index = -1;
-            SecondaryIndex = -1;
         }
 
-        public PortEntry(string Name, int Address, string MAIS, string LSB, string MSB,
-            string type, string FPGA, string Init, string Comment, string Group) :
-            this(Name, Address, int.Parse(MAIS), int.Parse(LSB), int.Parse(MSB),
-                (p_type)Enum.Parse(typeof(p_type), type, true),
-                (fpga_field)Enum.Parse(typeof(fpga_field), FPGA, true),
-                Init, Comment, Group)
+        public PortEntry(string Name, string ValidField, string Type, char R_W, string Data_size,
+            char Bank, string Memory_size, string Memory_section, string Relative_address,
+            string Priority, char Anable_emerge, string Read_bk_address, string Comment) :
+            this(Name, bool.Parse(ValidField), (p_type)Enum.Parse(typeof(p_type), Type, true),
+                R_W, int.Parse(Data_size), Bank, Memory_size, int.Parse(Memory_section),
+                bool.Parse(Relative_address), int.Parse(Priority), Anable_emerge, bool.Parse(Read_bk_address),
+                Comment)
         { }
 
         /* Get and Set functions */
-        public String GetName()
+        public string GetName()
         {
             return Name;
         }
@@ -79,87 +81,102 @@ namespace MultiPortBreakDown
             this.Name = Name;
         }
 
-        public int GetAddress()
+        public bool GetValidField()
         {
-            return Address;
+            return ValidField;
         }
 
-        public void SetAddress(int Address)
+        public void SetValidField(bool ValidField)
         {
-            this.Address = Address;
+            this.ValidField = ValidField;
         }
 
-        public int GetMAIS()
+        public char GetR_W()
         {
-            return MAIS;
+            return R_W;
         }
 
-        public void SetMAIS(int Mais)
+        public void SetR_W(char R_W)
         {
-            MAIS = Mais;
+            this.R_W = R_W;
         }
 
-        public int GetLSB()
+        public int GetData_size()
         {
-            return LSB;
+            return Data_size;
         }
 
-        public void SetLSB(int LSB)
+        public void SetData_size(int Data_size)
         {
-            this.LSB = LSB;
+            this.Data_size = Data_size;
         }
 
-        public int GetMSB()
+        public int GetMemory_section()
         {
-            return MSB;
+            return Memory_section;
         }
 
-        public void SetMSB(int MSB)
+        public void SetMemory_section(int Memory_section)
         {
-            this.MSB = MSB;
+            this.Memory_section = Memory_section;
         }
 
-        public p_type GetRegType()
+        public p_type GetPortType()
         {
             return Type;
         }
 
-        public void SetRegType(p_type Type)
+        public void SetPortType(p_type Type)
         {
             this.Type = Type;
         }
 
-        public void SetRegType(string Type)
+        public void SetPortType(string Type)
         {
-            SetRegType((p_type)Enum.Parse(typeof(p_type), Type, true));
+            SetPortType((p_type)Enum.Parse(typeof(p_type), Type, true));
         }
 
-        public fpga_field GetFPGA()
+        public bool GetRelative_address()
         {
-            return FPGA;
+            return Relative_address;
         }
 
-        public void SetFPGA(fpga_field FPGA)
+        public void SetRelative_address(bool Relative_address)
         {
-            this.FPGA = FPGA;
+            this.Relative_address = Relative_address;
         }
 
-        public void SetFPGA(string FPGA)
+        public int GetPriority()
         {
-            SetFPGA((fpga_field)Enum.Parse(typeof(fpga_field), FPGA, true));
+            return Priority;
         }
 
-        public String GetInit()
+        public void SetPriority(int Priority)
         {
-            return Init;
+            this.Priority = Priority;
         }
 
-        public void SetInit(string Init)
+        public char GetAnable_emerge()
         {
-            this.Init = Init;
+            return Anable_emerge;
         }
 
-        public String GetComment()
+        public void SetAnable_emerge(char Anable_emerge)
+        {
+            this.Anable_emerge = Anable_emerge;
+        }
+
+        public bool GetRead_bk_address()
+        {
+            return Read_bk_address;
+        }
+
+        public void SetRead_bk_address(bool Read_bk_address)
+        {
+            this.Read_bk_address = Read_bk_address;
+        }
+
+        public string GetComment()
         {
             return Comment;
         }
@@ -169,31 +186,9 @@ namespace MultiPortBreakDown
             this.Comment = Comment;
         }
 
-        public String GetGroup()
-        {
-            return Group;
-        }
-
-        public void SetGroup(string Group)
-        {
-            this.Group = Group;
-        }
-
-        public List<PortEntry> GetFields()
-        {
-            return Fields;
-        }
-
         public string GetFormat()
         {
             return pattern;
-        }
-
-        public void AddField(PortEntry Field)
-        {
-            Field.SetGroup(Group);
-            Field.SetSecondaryIndex(Fields.Count);
-            Fields.Add(Field);
         }
 
         public string GetReason()
@@ -236,67 +231,48 @@ namespace MultiPortBreakDown
             this.Index = Index;
         }
 
-        public int GetSecondaryIndex()
+        public char GetBank()
         {
-            return SecondaryIndex;
+            return Bank;
         }
 
-        public void SetSecondaryIndex(int index)
+        public void SetBank(char Bank)
         {
-            SecondaryIndex = index;
+            this.Bank = Bank;
         }
 
         /* Validation Functions */
-        public bool IsValidLsbMsb()
+        public bool IsValidR_W()
         {
-            return MSB >= LSB;
+            return R_W == 'W' || R_W == 'R';
         }
 
-        public static bool IsValidLsbMsb(string msb, string lsb)
+        public bool IsValidData_size()
         {
-            int lsbInt = Int32.Parse(lsb);
-            int msbInt = Int32.Parse(msb);
-            return msbInt >= lsbInt;
+            for (int i = 3; i <= 9; i++)
+                if (Math.Pow(2, i) == Data_size)
+                    return true;
+            return false;
         }
 
-        public bool IsValidMAIS()
+        public bool IsValidBank()
         {
-            return MAIS == 0 || MAIS == 1 || MAIS == 2 || MAIS == 4;
+            return Bank == 'A' || Bank == 'B';
         }
 
-        public bool IsValidAddress()
+        public bool IsValidPriority()
         {
-            return Address >= 0 && Address < 1024;
+            return Priority > 0 && Priority < 100;
         }
 
-        // Check fields don't intersect
-        public bool FieldValidation()
+        public bool IsValidMemorySection()
         {
-            if (!IsComment && Fields.Count > 0)
-            {
-                List<Interval> fieldsIntervals = new List<Interval>();
-                foreach (PortEntry item in Fields)
-                    fieldsIntervals.Add(new Interval(item.Name, item.LSB, item.MSB));
-                Tuple<string, string> inter = Interval.IsIntersectList(fieldsIntervals);
-                string field1 = inter.Item1, field2 = inter.Item2;
-                if (!(field1.Equals("") && field2.Equals("")))
-                {
-                    Reason = "Field bits " + field1 + " and " + field2 + " of register " + GetName() + " (" + Address + ") intersect";
-                    IsValid = false;
-                    return false;
-                }
-            }
-            return true;
+            return Memory_section > 0;
         }
 
-        public bool IsValidLSB()
+        public bool IsValidAnableEmerge()
         {
-            return LSB >= 0 && LSB < 32;
-        }
-
-        public bool IsValidMSB()
-        {
-            return MSB >= 0 && MSB < 32;
+            return Anable_emerge == 'N' || Anable_emerge == 'Y';
         }
 
         public static bool IsValidType(string Type)
@@ -312,27 +288,14 @@ namespace MultiPortBreakDown
             return true;
         }
 
-        public static bool IsValidFPGA(string fpga)
-        {
-            try
-            {
-                fpga_field t = (fpga_field)Enum.Parse(typeof(fpga_field), fpga, true);
-            }
-            catch (ArgumentException)
-            {
-                return false;
-            }
-            return true;
-        }
-
         /* Output Functions */
         // Returns x spaces
-        public static string getSpaces(int x)
+        public static string GetSpaces(int x)
         {
             return string.Concat(Enumerable.Repeat(" ", x));
         }
 
-        public static PortEntry RegEntryParse(String str_entry, String group, bool last)
+        public static PortEntry PortEntryParse(string str_entry, bool last)
         {
             string actual = pattern;
             if (last)
@@ -350,31 +313,31 @@ namespace MultiPortBreakDown
             return null;
         }
 
-        public void EditRegister(string mais, string lsb, string msb, p_type t, fpga_field r, string init, string comment, string group)
+        public void EditPort(bool ValidField, p_type Type, char R_W, int Data_size,
+            char Bank, string Memory_size, int Memory_section, bool Relative_address,
+            int Priority, char Anable_emerge, bool Read_bk_address, string Comment)
         {
-            MAIS = Int32.Parse(mais);
-            LSB = Int32.Parse(lsb);
-            MSB = Int32.Parse(msb);
-            Type = t;
-            FPGA = r;
-            Init = init;
-            Comment = comment;
-            Group = group;
+            this.ValidField = ValidField;
+            this.Type = Type;
+            this.R_W = R_W;
+            this.Data_size = Data_size;
+            this.Type = Type;
+            this.Bank = Bank;
+            this.Memory_size = Memory_size;
+            this.Memory_section = Memory_section;
+            this.Relative_address = Relative_address;
+            this.Priority = Priority;
+            this.Anable_emerge = Anable_emerge;
+            this.Read_bk_address = Read_bk_address;
+            this.Comment = Comment;
         }
 
         //override
-        public string toName()
+        public string ToName()
         {
-            string res = "";
-
             if (IsComment)
-                res += "--";
-
-            if (Type != p_type.SPRINT)
-                res += "\t\t\t\t" + Name + ",\n";
-            else
-                res += "\t\t\t\t\t" + Name + ",\n";
-            return res;
+                return "--" + Name;
+            return Name;
         }
 
         public string ToXMLstring()
@@ -387,35 +350,34 @@ namespace MultiPortBreakDown
             else
                 res += "<tr>";
             res += "<td>" + Name;
-            res += "</td><td>" + Group;
-            res += "</td><td>" + Address.ToString();
-            res += "</td><td>" + MAIS.ToString();
-            res += "</td><td>" + LSB.ToString();
-            res += "</td><td>" + MSB.ToString();
-            res += "</td><td>" + valid_type[(int)Type];
-            res += "</td><td>" + valid_fpga[(int)FPGA];
-            res += "</td><td>" + Init;
+            res += "</td><td>" + ValidField.ToString();
+            res += "</td><td>" + Type.ToString();
+            res += "</td><td>" + R_W;
+            res += "</td><td>" + Data_size.ToString();
+            res += "</td><td>" + Bank;
+            res += "</td><td>" + Memory_size;
+            res += "</td><td>" + Memory_section.ToString();
+            res += "</td><td>" + Relative_address.ToString();
+            res += "</td><td>" + Priority.ToString();
+            res += "</td><td>" + Anable_emerge;
+            res += "</td><td>" + Read_bk_address.ToString();
             res += "</td><td>" + Comment + "</td></tr>";
             return res;
         }
 
-        public string ToEntry(bool last = false)
+        /*public string ToEntry(bool last = false)
         {
             string res = "";
             if (IsComment)
                 res += "--";
-            if (Type == p_type.SPRINT)
-                res += "\t\t\t\t\t" + "(" + Name + getSpaces(35 - Name.Length) + ",";
+            res += "\t\t\t\t" + "(" + Name + GetSpaces(39 - Name.Length) + ",";
 
-            else
-                res += "\t\t\t\t" + "(" + Name + getSpaces(39 - Name.Length) + ",";
-
-            string adrs = Address.ToString();
-            res += getSpaces(8 - adrs.Length) + adrs + ",";
+            string adrs = ValidField.ToString();
+            res += GetSpaces(8 - adrs.Length) + adrs + ",";
             res += "  " + MAIS.ToString() + ",";
             string lsb = LSB.ToString();
             string msb = MSB.ToString();
-            res += getSpaces(3 - lsb.Length) + lsb + "," + getSpaces(3 - msb.Length) + msb + ",";
+            res += GetSpaces(3 - lsb.Length) + lsb + "," + GetSpaces(3 - msb.Length) + msb + ",";
             res += " " + valid_type[(int)Type] + getSpaces(5 - valid_type[(int)Type].Length) + ",";
             res += " " + valid_fpga[(int)FPGA] + getSpaces(4 - valid_fpga[(int)FPGA].Length) + ",";
 
@@ -432,61 +394,6 @@ namespace MultiPortBreakDown
                 res += "\t-- " + Comment;
             res += "\n";
             return res;
-        }
-
-        public object[] GetTableEntry()
-        {
-            return new object[] { Name, Address, MAIS, LSB, MSB, Type, FPGA, Init, Comment, Index, SecondaryIndex };
-        }
-
-        /*public int CompareTo(RegisterEntry other)
-        {
-            int comp = Name.CompareTo(other.GetName());
-            if (comp < 0)
-                return -1;
-            else if (comp > 0)
-                return 1;
-            comp = Address.CompareTo(other.GetAddress());
-            if (comp < 0)
-                return -1;
-            else if (comp > 0)
-                return 1;
-            comp = MAIS.CompareTo(other.GetMAIS());
-            if (comp < 0)
-                return -1;
-            else if (comp > 0)
-                return 1;
-            comp = LSB.CompareTo(other.GetLSB());
-            if (comp < 0)
-                return -1;
-            else if (comp > 0)
-                return 1;
-            comp = MSB.CompareTo(other.GetMSB());
-            if (comp < 0)
-                return -1;
-            else if (comp > 0)
-                return 1;
-            comp = Type.CompareTo(other.GetRegType());
-            if (comp < 0)
-                return -1;
-            else if (comp > 0)
-                return 1;
-            comp = FPGA.CompareTo(other.GetFPGA());
-            if (comp < 0)
-                return -1;
-            else if (comp > 0)
-                return 1;
-            comp = Init.CompareTo(other.GetInit());
-            if (comp < 0)
-                return -1;
-            else if (comp > 0)
-                return 1;
-            comp = Group.CompareTo(other.GetGroup());
-            if (comp < 0)
-                return -1;
-            else if (comp > 0)
-                return 1;
-            return 0;
         }*/
     }
 }
