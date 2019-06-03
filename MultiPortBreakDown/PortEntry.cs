@@ -241,6 +241,15 @@ namespace MultiPortBreakDown
             this.Bank = Bank;
         }
 
+        public string GetMemorySize()
+        {
+            return Memory_size;
+        }
+
+        public void SetMemorySize(string Memory_size)
+        {
+            this.Memory_size = Memory_size;
+        }
         /* Validation Functions */
         public bool IsValidR_W()
         {
@@ -297,7 +306,8 @@ namespace MultiPortBreakDown
 
         public static PortEntry PortEntryParse(string str_entry, bool last)
         {
-            string actual = pattern;
+            throw new NotImplementedException();
+            /*string actual = pattern;
             if (last)
                 actual = final_pattern;
             string[] fields = Regex.Split(str_entry, actual);
@@ -310,7 +320,7 @@ namespace MultiPortBreakDown
                     return null;
                 return new PortEntry(fields[1], Int32.Parse(fields[2]), fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], comment, group);
             }
-            return null;
+            return null;*/
         }
 
         public void EditPort(bool ValidField, p_type Type, char R_W, int Data_size,
@@ -395,5 +405,11 @@ namespace MultiPortBreakDown
             res += "\n";
             return res;
         }*/
+
+        public object[] GetTableEntry()
+        {
+            return new object[] {Name, ValidField, Type, R_W, Data_size, Bank, Memory_size, Memory_section,
+            Relative_address, Priority, Anable_emerge, Read_bk_address, Comment, Index};
+        }
     }
 }
