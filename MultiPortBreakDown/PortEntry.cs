@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace MultiPortBreakDown
 {
-    class PortEntry
+    public class PortEntry
     {
         /* Globals */
-        public enum p_type { SLOW, SEQUENTIAL, RANDOM, SPRINT };
-        public static string pattern = @"^[ \t]*\(([a-zA-Z][a-zA-Z0-9_]*)[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([0124])[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([a-zA-Z_]+)[ \t]*,[ \t]*([a-zA-Z_]+)[ \t]*,[ \t]*(\w+)[ \t]*\)[ \t]*,[ \t]*(--[ \t]*(.*)[ \t]*)*";
-        public static string final_pattern = @"^[ \t]*\(([a-zA-Z][a-zA-Z0-9_]*)[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([0124])[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([a-zA-Z_]+)[ \t]*,[ \t]*([a-zA-Z_]+)[ \t]*,[ \t]*(\w+)[ \t]*\)[ \t]*(--[ \t]*(.*)[ \t]*)*";
+        public enum p_type { SLOW, SEQUENTIAL, RANDOM, SPRINT, MANAGER };
+        public static string pattern = @"^[ \t]*\(([a-zA-Z][a-zA-Z0-9_]*)[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*,[ \t]*([WwRr])[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([aAbB])[ \t]*,[ \t]*([a-zA-Z]+)[ \t]*,[ \t]*(.+)[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*(\[a-zA-Z]+),[ \t]*(\d+)[ \t]*,[ \t]*(\[NnYy])[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*\)[ \t]*,[ \t]*(--[ \t]*(.*)[ \t]*)*";
+        public static string final_pattern = @"^[ \t]*\(([a-zA-Z][a-zA-Z0-9_]*)[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*,[ \t]*([WwRr])[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([aAbB])[ \t]*,[ \t]*([a-zA-Z]+)[ \t]*,[ \t]*(.+)[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*(\[a-zA-Z]+),[ \t]*(\d+)[ \t]*,[ \t]*(\[NnYy])[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*\)[ \t]*(--[ \t]*(.*)[ \t]*)*";
 
         /* Class fields */
         public string Name { get; set; }
@@ -375,7 +375,7 @@ namespace MultiPortBreakDown
             return res;
         }
 
-        /*public string ToEntry(bool last = false)
+        public string ToEntry(bool last = false)
         {
             string res = "";
             if (IsComment)
@@ -384,18 +384,13 @@ namespace MultiPortBreakDown
 
             string adrs = ValidField.ToString();
             res += GetSpaces(8 - adrs.Length) + adrs + ",";
-            res += "  " + MAIS.ToString() + ",";
-            string lsb = LSB.ToString();
-            string msb = MSB.ToString();
-            res += GetSpaces(3 - lsb.Length) + lsb + "," + GetSpaces(3 - msb.Length) + msb + ",";
-            res += " " + valid_type[(int)Type] + getSpaces(5 - valid_type[(int)Type].Length) + ",";
-            res += " " + valid_fpga[(int)FPGA] + getSpaces(4 - valid_fpga[(int)FPGA].Length) + ",";
-
-            if (int.TryParse(Init, out int x))
-                res += getSpaces(Math.Max(4 - Init.Length, 0)) + Init + ")";
-
-            else
-                res += Init + ")";
+            res += "  " + Type.ToString() + ",";
+            string write_read = R_W.ToString();
+            string data_size = Data_size.ToString();
+            res += GetSpaces(3 - write_read.Length) + write_read + "," + GetSpaces(3 - data_size.Length) + data_size + ",";
+            res += " " + Bank + GetSpaces(4) + ",";
+            res += " " + Memory_size + GetSpaces(4 - Memory_size.Length) + ",";
+            res += Relative_address.ToString() + ", " + Priority.ToString() + ", " + Anable_emerge + ")";
 
             if (!last)
                 res += ",";
@@ -404,7 +399,7 @@ namespace MultiPortBreakDown
                 res += "\t-- " + Comment;
             res += "\n";
             return res;
-        }*/
+        }
 
         public object[] GetTableEntry()
         {

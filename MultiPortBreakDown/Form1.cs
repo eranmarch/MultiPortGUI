@@ -25,7 +25,7 @@ namespace MultiPortBreakDown
             Ports = new List<PortEntry>();
             xs = new XmlSerializer(typeof(List<PortEntry>));
             ReadDataBase();
-            ColorInValid();
+            InitFields();
         }
 
         private void InitFields()
@@ -45,23 +45,16 @@ namespace MultiPortBreakDown
             DebugCheckBox.Checked = false;
         }
 
-        private bool CheckDup(RegisterEntry new_entry)
+        private bool CheckDup(PortEntry new_entry)
         {
-            int addr_new = new_entry.GetAddress();
             string name_new = new_entry.GetName();
-            foreach (RegisterEntry item in RegList)
+            foreach (PortEntry item in Ports)
             {
                 if (item.GetIsComment() || item == new_entry)
                     continue;
                 if (item.GetName().Equals(name_new))
                 {
-                    new_entry.SetReason("Name " + name_new + " is already in the list at address " + item.GetAddress().ToString());
-                    new_entry.SetValid(false);
-                    return false;
-                }
-                if (item.GetAddress() == addr_new)
-                {
-                    new_entry.SetReason("Address " + addr_new + " is already in the list at register " + item.GetName());
+                    new_entry.SetReason("Name " + name_new + " is already in the list");
                     new_entry.SetValid(false);
                     return false;
                 }
@@ -72,7 +65,7 @@ namespace MultiPortBreakDown
         /* Validate Opened file */
         private void OpenValidation()
         {
-            foreach (RegisterEntry new_entry in RegList)
+            foreach (PortEntry new_entry in Ports)
                 if (CheckDup(new_entry))
                     if (FileValidator.ValidEntry(new_entry))
                     {
@@ -100,12 +93,7 @@ namespace MultiPortBreakDown
                 return false;
             }
 
-            // check sequintial
-            if (!entry.IsValidLsbMsb())
-            {
-                MessageBox.Show("Can't insert register " + entry.GetName() + " with LSB greater than MSB");
-                return false;
-            }
+            // check sequintial here
             return true;
         }
 
@@ -118,11 +106,30 @@ namespace MultiPortBreakDown
                 InitFields();
                 return;
             }
-            PortEntry entry = new PortEntry(PortNameText.Text, ValidCheckBox.Checked.ToString(), TypeOpts.SelectedValue.ToString(), R_WCombo.SelectedValue, DataSizeBox.SelectedValue.ToString(),
-                BankBox.SelectedValue, MemorySizeText, numericUpDown2.Value.ToString(), RelativeAddressCheckBox.Checked.ToString(), numericUpDown1.Value.ToString(), 'y', DebugCheckBox.Checked.ToString(), CommentText.Text);
+
+            char Anable_emerge = 'Y';
+            if (!EmergencyCheckBox.Checked)
+                Anable_emerge = 'N';
+            /*Console.WriteLine(PortNameText.Text);
+            Console.WriteLine(ValidCheckBox.Checked.ToString());
+            Console.WriteLine(TypeOpts.SelectedItem.ToString());
+            Console.WriteLine(R_WCombo.SelectedItem.ToString());
+            Console.WriteLine(DataSizeBox.SelectedItem.ToString());
+            Console.WriteLine(BankBox.SelectedItem.ToString());
+            Console.WriteLine(MemorySizeText.Text);
+            Console.WriteLine(numericUpDown2.Value.ToString());
+            Console.WriteLine(RelativeAddressCheckBox.Checked.ToString());
+            Console.WriteLine(numericUpDown1.Value.ToString());
+            Console.WriteLine(Anable_emerge);
+            Console.WriteLine(DebugCheckBox.Checked.ToString());
+            Console.WriteLine(CommentText.Text);*/
+            PortEntry entry = new PortEntry(PortNameText.Text, ValidCheckBox.Checked.ToString(), TypeOpts.SelectedItem.ToString(), R_WCombo.SelectedItem.ToString()[0], DataSizeBox.SelectedItem.ToString(),
+            BankBox.SelectedItem.ToString()[0], MemorySizeText.Text, numericUpDown2.Value.ToString(), RelativeAddressCheckBox.Checked.ToString(), numericUpDown1.Value.ToString(), Anable_emerge, DebugCheckBox.Checked.ToString(), CommentText.Text);
             if (!InputValidation(entry))
                 return;
             AddEntryToTable(entry);
+            searchBox.Text = "";
+            dataGridView1.DataSource = Ports;
             ErrorMessage.Text = "[#] Register named " + PortNameText.Text + " was added";
             InitFields();
             saved = false;
@@ -168,14 +175,16 @@ namespace MultiPortBreakDown
             }
             string memory_size = MemorySizeText.Text;
             bool valid = ValidCheckBox.Checked;
-            char r_w = (char)R_WCombo.SelectedValue;
+            char r_w = (char)R_WCombo.SelectedItem;
             bool relative_address = RelativeAddressCheckBox.Checked;
-            bool emergency_enable = EmergencyCheckBox.Checked;
+            char emergency_enable = 'N';
+            if (!EmergencyCheckBox.Checked)
+                emergency_enable = 'Y';
             bool debug_enable = DebugCheckBox.Checked;
             int priority = (int)numericUpDown1.Value;
             int memory_section = (int)numericUpDown2.Value;
-            int data_size = (int)DataSizeBox.SelectedValue;
-            char bank = (char)BankBox.SelectedValue;
+            int data_size = (int)DataSizeBox.SelectedItem;
+            char bank = (char)BankBox.SelectedItem;
             string comment = CommentText.Text;
             p_type type = (p_type)Enum.Parse(typeof(p_type), TypeOpts.Text, true);
 
@@ -220,6 +229,7 @@ namespace MultiPortBreakDown
                 FileStream fs = new FileStream(@"ports.txt", FileMode.Open, FileAccess.Read);
                 Ports = (List<PortEntry>)xs.Deserialize(fs);
                 fs.Close();
+                ColorInValid();
             }
             catch (Exception e)
             {
@@ -350,28 +360,7 @@ namespace MultiPortBreakDown
                 doc += date;
                 doc += "<h2>" + date + "<br/>" + introDec + "</h2>";
                 doc += "<table style='width: 100 %'>";
-                doc += "<tr><th>Name</th><th>Group</th><th>Address</th><th>Mais</th><th>LSB</th><th>MSB</th><th>TYPE</th><th>FPGA</th><th>Init</th><th>Comment</th></tr>";
-                TreeGridNode last_node = null;
-                for (int i = treeGridView1.Nodes.Count - 1; i >= 0; i--)
-                {
-                    TreeGridNode last_group = treeGridView1.Nodes[i];
-                    if (last_group.HasChildren)
-                    {
-                        last_node = last_group.Nodes[last_group.Nodes.Count - 1];
-                        if (last_node.HasChildren)
-                        {
-                            last_node = last_node.Nodes[last_node.Nodes.Count - 1];
-                        }
-                        break;
-                    }
-                }
-                RegisterEntry last = RegList[(int)last_node.Cells["IndexColumn"].Value];
-                int k = (int)last_node.Cells["SecondaryIndexColumn"].Value;
-                if (k != -1)
-                {
-                    last = last.GetFields()[k];
-                    //MessageBox.Show()
-                }
+                doc += "<tr><th>Name</th><th>Valid</th><th>Type</th><th>Write/Read</th><th>Data Size</th><th>Bank</th><th>Memory Size</th><th>Relative Address</th><th>Priority</th><th>Emergency></th><th>Comment</th></tr>";
                 while ((line = file.ReadLine()) != null)
                 {
                     if (line.Length == 0)
@@ -387,32 +376,11 @@ namespace MultiPortBreakDown
                     res += line + "\n";
                 }
                 string prop = "", names = "";
-                foreach (string group in RegGroupOpts.Items)
+                foreach (PortEntry l in Ports)
                 {
-                    names += "\t\t -- " + group + "\n";
-                    prop += "\t\t -- " + group + "\n";
-                    foreach (RegisterEntry l in RegList)
-                    {
-                        if (l.GetGroup().Equals(group))
-                        {
-                            List<RegisterEntry> fields = l.GetFields();
-
-                            names += l.toName();
-
-                            prop += l.ToEntry(l == last);
-
-                            doc += l.ToXMLstring();
-
-                            foreach (RegisterEntry f in fields)
-                            {
-                                names += f.toName();
-
-                                prop += f.ToEntry(f == last);
-
-                                doc += f.ToXMLstring();
-                            }
-                        }
-                    }
+                    names += l.ToName();
+                    prop += l.ToEntry(l.Index == Ports.Count - 1);
+                    doc += l.ToXMLstring();
 
                 }
 
@@ -527,37 +495,22 @@ namespace MultiPortBreakDown
                 CommentText.Text = pe.GetComment();
                 MemorySizeText.Text = pe.GetMemorySize();
                 ValidCheckBox.Checked = pe.GetValidField();
-                R_WCombo.SelectedValue = pe.GetR_W();
                 RelativeAddressCheckBox.Checked = pe.GetRelative_address();
                 EmergencyCheckBox.Checked = pe.GetAnable_emerge() == 'Y';
                 DebugCheckBox.Checked = pe.GetRead_bk_address();
-                DataSizeBox.SelectedValue =
-                InitText.Text = pe.GetInit();
-                int index = LSBOpts.FindStringExact(pe.GetLSB().ToString());
+
+                int index = R_WCombo.FindStringExact(pe.GetR_W().ToString());
                 if (index == -1)
                     index = 0;
-                LSBOpts.SelectedIndex = index;
-                index = LSBOpts.FindStringExact(pe.GetLSB().ToString());
+                R_WCombo.SelectedIndex = index;
+                index = DataSizeBox.FindStringExact(pe.GetData_size().ToString());
                 if (index == -1)
                     index = 0;
-                LSBOpts.SelectedIndex = index;
-                index = MSBOpts.FindStringExact(pe.GetMSB().ToString());
-                if (index == -1)
-                    index = 31;
-                MSBOpts.SelectedIndex = index;
-                index = MAISOpts.FindStringExact(pe.GetMAIS().ToString());
-                if (index == -1)
-                    index = 0;
-                MAISOpts.SelectedIndex = index;
-                index = TypeOpts.FindStringExact(pe.GetRegType().ToString());
+                DataSizeBox.SelectedIndex = index;
+                index = TypeOpts.FindStringExact(pe.GetPortType().ToString());
                 if (index == -1)
                     index = 0;
                 TypeOpts.SelectedIndex = index;
-                index = FPGAOpts.FindStringExact(pe.GetFPGA().ToString());
-                if (index == -1)
-                    index = 0;
-                FPGAOpts.SelectedIndex = index;
-                RegGroupOpts.SelectedIndex = RegGroupOpts.FindStringExact(pe.GetGroup());
 
                 if (pe.GetIsComment())
                     ErrorMessage.Text = "> ";
