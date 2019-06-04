@@ -406,5 +406,12 @@ namespace MultiPortBreakDown
             return new object[] {Name, ValidField, Type, R_W, Data_size, Bank, Memory_size, Memory_section,
             Relative_address, Priority, Anable_emerge, Read_bk_address, Comment, IsComment, Index};
         }
+
+        override
+        public string ToString(){
+            return Name + ", " + ValidField + ", " + Type + ", " + R_W + ", " + Data_size + ", " + Bank
+                + ", " + Memory_size + ", " + Memory_section + ", " + Relative_address + ", " + Priority
+                + ", " + Anable_emerge + ", " + Read_bk_address + ", " + Comment;
+        }
     }
 }

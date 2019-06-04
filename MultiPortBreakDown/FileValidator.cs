@@ -18,6 +18,7 @@ namespace MultiPortBreakDown
         private readonly char[] charsToTrimGlobal = { ' ', '\t' };
         private readonly string[] keywords = { "signal", "bus", "component", "wait" };
         private readonly string path_to_correct = "mycorrect.txt";
+        readonly string pattern = @"^[ \t]*--[ \t]*(.*)[ \t]*";
 
         enum Cmp_mod { Start, Port_names, Middle, Port_entrys, End };
 
@@ -115,6 +116,17 @@ namespace MultiPortBreakDown
                     int k;
                     for (k = i + 1; k < lines.Length && !lines_correct[j - 1].Equals(lines[k]); k++)
                     {
+                        Match result = Regex.Match(lines[k], pattern);
+                        if (result.Success)
+                        {
+                            string port_str = Regex.Split(lines[k], pattern)[1];
+                            PortEntry pe = PortEntry.PortEntryParse(port_str, lines[k + 1].Equals(lines_correct[j - 1]));
+                            if (pe != null)
+                            {
+                                pe.SetIsComment(true);
+                                Ports.Add(pe);
+                            }
+                        }
                         // Save Names
                         if (run_state == (int)Cmp_mod.Port_names)
                         {

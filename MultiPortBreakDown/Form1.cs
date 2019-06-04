@@ -65,13 +65,32 @@ namespace MultiPortBreakDown
         /* Validate Opened file */
         private void OpenValidation()
         {
+            //List<int> priorities = new List<int>();
             foreach (PortEntry new_entry in Ports)
+            {
+                //priorities.Add(new_entry.GetPriority());
                 if (CheckDup(new_entry))
                     if (FileValidator.ValidEntry(new_entry))
                     {
                         new_entry.SetValid(true);
                         new_entry.SetReason("");
                     }
+            }
+            /*priorities.Sort();
+            bool test = false;
+            Console.WriteLine("Length: " + Ports.ToString());
+            for (int i = 0; i < priorities.Count - 1; i++)
+            {
+                MessageBox.Show(i.ToString());
+                if (i < priorities.Count - 2 && priorities[i] + 1 != priorities[i + 1])
+                {
+                    PriorityError.Text = "Note That Priority " + (priorities[i] + 1).ToString() + " is not in the list";
+                    test = true;
+                    break;
+                }
+            }
+            if (!test)
+                PriorityError.Text = "All priorities are good!";*/
             ColorInValid();
         }
 
@@ -106,6 +125,7 @@ namespace MultiPortBreakDown
             dataGridView1.Columns["IsValid"].Visible = false;
             dataGridView1.Columns["Reason"].Visible = false;
             dataGridView1.Columns["Index"].Visible = false;
+            //ColorInValid();
         }
 
         /* Insert port to the table */
@@ -140,10 +160,8 @@ namespace MultiPortBreakDown
                 return;
             AddEntryToTable(entry);
             searchBox.Text = "";
-            //dataGridView1.DataSource = Ports;
-            //dataGridView1.Rows.Add(entry.GetTableEntry());
             UpdateTable(Ports);
-            ErrorMessage.Text = "[#] Register named " + PortNameText.Text + " was added";
+            ErrorMessage.Text = "[#] Port named " + PortNameText.Text + " was added";
             InitFields();
             saved = false;
         }
@@ -193,7 +211,7 @@ namespace MultiPortBreakDown
             char r_w = R_WCombo.SelectedItem.ToString()[0];
             bool relative_address = RelativeAddressCheckBox.Checked;
             char emergency_enable = 'N';
-            if (!EmergencyCheckBox.Checked)
+            if (EmergencyCheckBox.Checked)
                 emergency_enable = 'Y';
             bool debug_enable = DebugCheckBox.Checked;
             int priority = (int)numericUpDown1.Value;
@@ -219,6 +237,7 @@ namespace MultiPortBreakDown
             OpenValidation();
             UpdateDataBase();
             EditCell(item_f, pe.GetTableEntry());
+            //MessageBox.Show(pe.ToString());
             saved = false;
         }
 
@@ -270,6 +289,7 @@ namespace MultiPortBreakDown
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 int index = (int)row.Cells["Index"].Value;
+                //MessageBox.Show(index + ", " + Ports.Count);
                 PortEntry port = Ports[index];
                 bool isComment = port.GetIsComment(), isValid = port.GetValid();
                 foreach (DataGridViewCell cell in row.Cells)
@@ -295,10 +315,15 @@ namespace MultiPortBreakDown
                 indices.Add((int)row.Cells["Index"].Value);
             }
             foreach (int index in indices.OrderByDescending(v => v))
+            {
+                for (int i = index + 1; i < Ports.Count; i++)
+                    Ports[i].Index--;
                 Ports.RemoveAt(index);
+            }
             SearchBox_TextChanged(sender, e);
             OpenValidation();
             UpdateDataBase();
+            UpdateTable(Ports);
             saved = false;
         }
 
@@ -553,7 +578,7 @@ namespace MultiPortBreakDown
             PortEntry entry;
             foreach (DataGridViewRow item in dataGridView1.SelectedRows)
             {
-                entry = Ports[(int)item.Cells["IndexColumn"].Value];
+                entry = Ports[(int)item.Cells["Index"].Value];
                 entry.SetIsComment(true);
             }
             searchBox.Text = "";
@@ -566,7 +591,7 @@ namespace MultiPortBreakDown
             PortEntry entry;
             foreach (DataGridViewRow item in dataGridView1.SelectedRows)
             {
-                entry = Ports[(int)item.Cells["IndexColumn"].Value];
+                entry = Ports[(int)item.Cells["Index"].Value];
                 entry.SetIsComment(false);
             }
             searchBox.Text = "";

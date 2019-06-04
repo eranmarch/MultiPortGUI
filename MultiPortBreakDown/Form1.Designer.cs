@@ -71,6 +71,9 @@ namespace MultiPortBreakDown
             this.R_WCombo = new System.Windows.Forms.ComboBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.ErrorMessage = new System.Windows.Forms.RichTextBox();
+            this.PriorityError = new System.Windows.Forms.RichTextBox();
+            this.CommentButton = new System.Windows.Forms.Button();
+            this.UnCommentButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -528,15 +531,51 @@ namespace MultiPortBreakDown
             // 
             this.ErrorMessage.Location = new System.Drawing.Point(2160, 261);
             this.ErrorMessage.Name = "ErrorMessage";
+            this.ErrorMessage.ReadOnly = true;
             this.ErrorMessage.Size = new System.Drawing.Size(523, 423);
             this.ErrorMessage.TabIndex = 60;
             this.ErrorMessage.Text = "";
+            // 
+            // PriorityError
+            // 
+            this.PriorityError.Location = new System.Drawing.Point(2160, 754);
+            this.PriorityError.Name = "PriorityError";
+            this.PriorityError.ReadOnly = true;
+            this.PriorityError.Size = new System.Drawing.Size(523, 53);
+            this.PriorityError.TabIndex = 61;
+            this.PriorityError.Text = "";
+            // 
+            // CommentButton
+            // 
+            this.CommentButton.Location = new System.Drawing.Point(253, 593);
+            this.CommentButton.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.CommentButton.Name = "CommentButton";
+            this.CommentButton.Size = new System.Drawing.Size(200, 55);
+            this.CommentButton.TabIndex = 62;
+            this.CommentButton.Text = "Comment";
+            this.CommentButton.UseVisualStyleBackColor = true;
+            this.CommentButton.Click += new System.EventHandler(this.CommentButton_Click);
+            // 
+            // UnCommentButton
+            // 
+            this.UnCommentButton.Location = new System.Drawing.Point(532, 593);
+            this.UnCommentButton.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.UnCommentButton.Name = "UnCommentButton";
+            this.UnCommentButton.Size = new System.Drawing.Size(200, 55);
+            this.UnCommentButton.TabIndex = 63;
+            this.UnCommentButton.Text = "UnComment";
+            this.UnCommentButton.UseVisualStyleBackColor = true;
+            this.UnCommentButton.Click += new System.EventHandler(this.UnCommentButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(2789, 1352);
+            this.Controls.Add(this.UnCommentButton);
+            this.Controls.Add(this.CommentButton);
+            this.Controls.Add(this.PriorityError);
             this.Controls.Add(this.ErrorMessage);
             this.Controls.Add(this.InsertButton);
             this.Controls.Add(this.Delete);
@@ -628,6 +667,9 @@ namespace MultiPortBreakDown
         private System.Windows.Forms.ComboBox R_WCombo;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.RichTextBox ErrorMessage;
+        private System.Windows.Forms.RichTextBox PriorityError;
+        private System.Windows.Forms.Button CommentButton;
+        private System.Windows.Forms.Button UnCommentButton;
     }
 }
 
