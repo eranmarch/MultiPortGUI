@@ -400,7 +400,7 @@ namespace MultiPortBreakDown
                 doc += date;
                 doc += "<h2>" + date + "<br/>" + introDec + "</h2>";
                 doc += "<table style='width: 100 %'>";
-                doc += "<tr><th>Name</th><th>Valid</th><th>Type</th><th>Write/Read</th><th>Data Size</th><th>Bank</th><th>Memory Size</th><th>Relative Address</th><th>Priority</th><th>Emergency></th><th>Comment</th></tr>";
+                doc += "<tr><th>Name</th><th>Valid</th><th>Type</th><th>Write/Read</th><th>Data Size</th><th>Bank</th><th>Memory Size</th><th>Memory Section</th><th>Relative Address</th><th>Priority</th><th>Emergency></th><th>Comment</th></tr>";
                 while ((line = file.ReadLine()) != null)
                 {
                     if (line.Length == 0)

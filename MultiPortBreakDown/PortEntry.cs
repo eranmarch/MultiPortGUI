@@ -12,7 +12,7 @@ namespace MultiPortBreakDown
         /* Globals */
         public enum p_type { SLOW, SEQUENTIAL, RANDOM, SPRINT, MANAGER };
         public static string pattern = @"^[ \t]*\(([a-zA-Z][a-zA-Z0-9_]*)[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*,[ \t]*([WwRr])[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([aAbB])[ \t]*,[ \t]*([a-zA-Z]+)[ \t]*,[ \t]*(.+)[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*(\[a-zA-Z]+),[ \t]*(\d+)[ \t]*,[ \t]*(\[NnYy])[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*\)[ \t]*,[ \t]*(--[ \t]*(.*)[ \t]*)*";
-        public static string final_pattern = @"^[ \t]*\(([a-zA-Z][a-zA-Z0-9_]*)[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*,[ \t]*([WwRr])[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([aAbB])[ \t]*,[ \t]*([a-zA-Z]+)[ \t]*,[ \t]*(.+)[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*(\[a-zA-Z]+),[ \t]*(\d+)[ \t]*,[ \t]*(\[NnYy])[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*\)[ \t]*(--[ \t]*(.*)[ \t]*)*";
+        public static string final_pattern = @"^[ \t]*\(([a-zA-Z][a-zA-Z0-9_]*)[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*,[ \t]*([WwRr])[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([aAbB])[ \t]*,[ \t]*([a-zA-Z]+)[ \t]*,[ \t]*(.+)[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*(\[a-zA-Z]+),[ \t]*(\d+)[ \t]*,[ \t]*(\[NnYy])[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*\)\);[ \t]*(--[ \t]*(.*)[ \t]*)*";
 
         /* Class fields */
         public string Name { get; set; }
@@ -306,8 +306,7 @@ namespace MultiPortBreakDown
 
         public static PortEntry PortEntryParse(string str_entry, bool last)
         {
-            throw new NotImplementedException();
-            /*string actual = pattern;
+            string actual = pattern;
             if (last)
                 actual = final_pattern;
             string[] fields = Regex.Split(str_entry, actual);
@@ -320,7 +319,7 @@ namespace MultiPortBreakDown
                     return null;
                 return new PortEntry(fields[1], Int32.Parse(fields[2]), fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], comment, group);
             }
-            return null;*/
+            return null;
         }
 
         public void EditPort(bool ValidField, p_type Type, char R_W, int Data_size,
@@ -391,10 +390,12 @@ namespace MultiPortBreakDown
             res += GetSpaces(3 - write_read.Length) + write_read + "," + GetSpaces(3 - data_size.Length) + data_size + ",";
             res += " " + Bank + GetSpaces(4) + ",";
             res += " " + Memory_size + GetSpaces(4 - Memory_size.Length) + ",";
-            res += Relative_address.ToString() + ", " + Priority.ToString() + ", " + Anable_emerge + ", " + Read_bk_address + ")";
+            res += Memory_section + ", " + Relative_address.ToString() + ", " + Priority.ToString() + ", " + Anable_emerge + ", " + Read_bk_address + ")";
 
             if (!last)
                 res += ",";
+            else
+                res += ");";
 
             if (Comment != "")
                 res += "\t-- " + Comment;
