@@ -17,7 +17,7 @@ namespace MultiPortBreakDown
         private string path_to_file;
         private readonly char[] charsToTrimGlobal = { ' ', '\t' };
         private readonly string[] keywords = { "signal", "bus", "component", "wait" };
-        private readonly string path_to_correct = "mycorrect.txt";
+        private readonly string path_to_correct = "mycorrect.vhd";
         readonly string pattern = @"^[ \t]*--[ \t]*(.*)[ \t]*";
 
         enum Cmp_mod { Start, Port_names, Middle, Port_entrys, End };

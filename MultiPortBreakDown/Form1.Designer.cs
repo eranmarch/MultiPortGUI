@@ -74,6 +74,7 @@ namespace MultiPortBreakDown
             this.PriorityError = new System.Windows.Forms.RichTextBox();
             this.CommentButton = new System.Windows.Forms.Button();
             this.UnCommentButton = new System.Windows.Forms.Button();
+            this.CloseButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -82,6 +83,7 @@ namespace MultiPortBreakDown
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.CloseButton);
             this.panel1.Controls.Add(this.SaveButton);
             this.panel1.Controls.Add(this.SaveAstButton);
             this.panel1.Controls.Add(this.OpenButton);
@@ -95,33 +97,36 @@ namespace MultiPortBreakDown
             // 
             // SaveButton
             // 
-            this.SaveButton.Location = new System.Drawing.Point(2061, 38);
+            this.SaveButton.Location = new System.Drawing.Point(1844, 41);
             this.SaveButton.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(173, 52);
             this.SaveButton.TabIndex = 4;
             this.SaveButton.Text = "Save";
             this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // SaveAstButton
             // 
-            this.SaveAstButton.Location = new System.Drawing.Point(1784, 38);
+            this.SaveAstButton.Location = new System.Drawing.Point(1567, 41);
             this.SaveAstButton.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.SaveAstButton.Name = "SaveAstButton";
             this.SaveAstButton.Size = new System.Drawing.Size(173, 57);
             this.SaveAstButton.TabIndex = 3;
             this.SaveAstButton.Text = "Save As";
             this.SaveAstButton.UseVisualStyleBackColor = true;
+            this.SaveAstButton.Click += new System.EventHandler(this.SaveAsButton_Click);
             // 
             // OpenButton
             // 
-            this.OpenButton.Location = new System.Drawing.Point(1499, 33);
+            this.OpenButton.Location = new System.Drawing.Point(1282, 36);
             this.OpenButton.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.OpenButton.Name = "OpenButton";
             this.OpenButton.Size = new System.Drawing.Size(173, 57);
             this.OpenButton.TabIndex = 2;
             this.OpenButton.Text = "Open";
             this.OpenButton.UseVisualStyleBackColor = true;
+            this.OpenButton.Click += new System.EventHandler(this.OpenButton_Click);
             // 
             // PathToFile
             // 
@@ -567,6 +572,17 @@ namespace MultiPortBreakDown
             this.UnCommentButton.UseVisualStyleBackColor = true;
             this.UnCommentButton.Click += new System.EventHandler(this.UnCommentButton_Click);
             // 
+            // CloseButton
+            // 
+            this.CloseButton.Location = new System.Drawing.Point(2103, 43);
+            this.CloseButton.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.CloseButton.Name = "CloseButton";
+            this.CloseButton.Size = new System.Drawing.Size(173, 52);
+            this.CloseButton.TabIndex = 5;
+            this.CloseButton.Text = "Close";
+            this.CloseButton.UseVisualStyleBackColor = true;
+            this.CloseButton.Click += new System.EventHandler(this.CloseButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
@@ -670,6 +686,7 @@ namespace MultiPortBreakDown
         private System.Windows.Forms.RichTextBox PriorityError;
         private System.Windows.Forms.Button CommentButton;
         private System.Windows.Forms.Button UnCommentButton;
+        private System.Windows.Forms.Button CloseButton;
     }
 }
 

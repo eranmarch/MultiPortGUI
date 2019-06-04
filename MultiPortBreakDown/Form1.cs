@@ -386,7 +386,7 @@ namespace MultiPortBreakDown
             StreamReader file;
             try
             {
-                file = new StreamReader("mycorrect.txt");
+                file = new StreamReader("mycorrect.vhd");
                 string line;
                 string res = "";
                 string title = Path.GetFileNameWithoutExtension(PathToFile.Text);

@@ -345,9 +345,10 @@ namespace MultiPortBreakDown
         //override
         public string ToName()
         {
+            string tabs = "\t\t\t\t\t\t\t";
             if (IsComment)
-                return "--" + Name;
-            return Name;
+                return tabs + "--" + Name + ",\n";
+            return tabs + Name + ",\n";
         }
 
         public string ToXMLstring()
@@ -390,7 +391,7 @@ namespace MultiPortBreakDown
             res += GetSpaces(3 - write_read.Length) + write_read + "," + GetSpaces(3 - data_size.Length) + data_size + ",";
             res += " " + Bank + GetSpaces(4) + ",";
             res += " " + Memory_size + GetSpaces(4 - Memory_size.Length) + ",";
-            res += Relative_address.ToString() + ", " + Priority.ToString() + ", " + Anable_emerge + ")";
+            res += Relative_address.ToString() + ", " + Priority.ToString() + ", " + Anable_emerge + ", " + Read_bk_address + ")";
 
             if (!last)
                 res += ",";
