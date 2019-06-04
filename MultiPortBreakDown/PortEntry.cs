@@ -404,7 +404,7 @@ namespace MultiPortBreakDown
         public object[] GetTableEntry()
         {
             return new object[] {Name, ValidField, Type, R_W, Data_size, Bank, Memory_size, Memory_section,
-            Relative_address, Priority, Anable_emerge, Read_bk_address, Comment, Index};
+            Relative_address, Priority, Anable_emerge, Read_bk_address, Comment, IsComment, Index};
         }
     }
 }

@@ -182,23 +182,27 @@ namespace MultiPortBreakDown
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(32, 839);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(2725, 484);
             this.dataGridView1.TabIndex = 29;
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.DataGridView1_SelectionChanged);
             // 
             // TypeOpts
             // 
             this.TypeOpts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TypeOpts.FormattingEnabled = true;
             this.TypeOpts.Items.AddRange(new object[] {
-            "Slow",
-            "Random",
-            "Sequensial",
-            "Sprint",
-            "Manager"});
+            "SLOW",
+            "RANDOM",
+            "SEQUENTIAL",
+            "SPRINT",
+            "MANAGER"});
             this.TypeOpts.Location = new System.Drawing.Point(1850, 335);
             this.TypeOpts.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.TypeOpts.Name = "TypeOpts";

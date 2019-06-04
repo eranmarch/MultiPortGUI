@@ -97,6 +97,17 @@ namespace MultiPortBreakDown
             return true;
         }
 
+        private void UpdateTable(List<PortEntry> lst)
+        {
+            var bindingList = new BindingList<PortEntry>(lst);
+            var source = new BindingSource(bindingList, null);
+            dataGridView1.DataSource = source;
+            dataGridView1.Columns["IsComment"].Visible = false;
+            dataGridView1.Columns["IsValid"].Visible = false;
+            dataGridView1.Columns["Reason"].Visible = false;
+            dataGridView1.Columns["Index"].Visible = false;
+        }
+
         /* Insert port to the table */
         private void InsertButton_Click(object sender, EventArgs e)
         {
@@ -129,7 +140,9 @@ namespace MultiPortBreakDown
                 return;
             AddEntryToTable(entry);
             searchBox.Text = "";
-            dataGridView1.DataSource = Ports;
+            //dataGridView1.DataSource = Ports;
+            //dataGridView1.Rows.Add(entry.GetTableEntry());
+            UpdateTable(Ports);
             ErrorMessage.Text = "[#] Register named " + PortNameText.Text + " was added";
             InitFields();
             saved = false;
@@ -155,9 +168,11 @@ namespace MultiPortBreakDown
         {
             PortEntry pe = null;
             DataGridViewRow item_f = null;
+            int i = -1;
             foreach (DataGridViewRow item in dataGridView1.SelectedRows)
             {
-                pe = Ports[(int)item.Cells["IndexColumn"].Value];
+                i = (int)item.Cells["Index"].Value;
+                pe = Ports[i];
                 item_f = item;
                 break;
             }
@@ -175,7 +190,7 @@ namespace MultiPortBreakDown
             }
             string memory_size = MemorySizeText.Text;
             bool valid = ValidCheckBox.Checked;
-            char r_w = (char)R_WCombo.SelectedItem;
+            char r_w = R_WCombo.SelectedItem.ToString()[0];
             bool relative_address = RelativeAddressCheckBox.Checked;
             char emergency_enable = 'N';
             if (!EmergencyCheckBox.Checked)
@@ -183,12 +198,11 @@ namespace MultiPortBreakDown
             bool debug_enable = DebugCheckBox.Checked;
             int priority = (int)numericUpDown1.Value;
             int memory_section = (int)numericUpDown2.Value;
-            int data_size = (int)DataSizeBox.SelectedItem;
-            char bank = (char)BankBox.SelectedItem;
+            int data_size = int.Parse(DataSizeBox.SelectedItem.ToString());
+            char bank = BankBox.SelectedItem.ToString()[0];
             string comment = CommentText.Text;
             p_type type = (p_type)Enum.Parse(typeof(p_type), TypeOpts.Text, true);
 
-            int i = pe.GetIndex();
             if (i == -1)
             {
                 MessageBox.Show("No such port " + name);
@@ -229,6 +243,8 @@ namespace MultiPortBreakDown
                 FileStream fs = new FileStream(@"ports.txt", FileMode.Open, FileAccess.Read);
                 Ports = (List<PortEntry>)xs.Deserialize(fs);
                 fs.Close();
+                //dataGridView1.DataSource = Ports;
+                UpdateTable(Ports);
                 ColorInValid();
             }
             catch (Exception e)
@@ -251,10 +267,10 @@ namespace MultiPortBreakDown
 
         private void ColorInValid()
         {
-            foreach (PortEntry port in Ports)
+            foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                int index = port.GetIndex();
-                DataGridViewRow row = dataGridView1.Rows[index];
+                int index = (int)row.Cells["Index"].Value;
+                PortEntry port = Ports[index];
                 bool isComment = port.GetIsComment(), isValid = port.GetValid();
                 foreach (DataGridViewCell cell in row.Cells)
                     if (isComment)
@@ -268,8 +284,7 @@ namespace MultiPortBreakDown
 
         private void SearchBox_TextChanged(object sender, EventArgs e)
         {
-            //dataGridView1.DataSource = Ports.Where(v => v.Value.GetName().Contains(searchBox.Text));
-            dataGridView1.DataSource = Ports.Where(v => v.GetName().Contains(searchBox.Text));
+            UpdateTable(Ports.Where(v => v.GetName().Contains(searchBox.Text)).ToList());
         }
 
         private void Delete_Click(object sender, EventArgs e)
@@ -487,6 +502,7 @@ namespace MultiPortBreakDown
             foreach (DataGridViewRow item in dataGridView1.SelectedRows)
             {
                 pe = Ports[(int)item.Cells["Index"].Value];
+                //MessageBox.Show(item.Cells["Index"].Value.ToString());
                 break;
             }
             if (pe != null)
