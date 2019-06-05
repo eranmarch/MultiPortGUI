@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MultiPortBreakDown
 {
@@ -11,8 +12,8 @@ namespace MultiPortBreakDown
     {
         /* Globals */
         public enum p_type { SLOW, SEQUENTIAL, RANDOM, SPRINT, MANAGER };
-        public static string pattern = @"^[ \t]*\(([a-zA-Z][a-zA-Z0-9_]*)[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*,[ \t]*([WwRr])[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([aAbB])[ \t]*,[ \t]*([a-zA-Z]+)[ \t]*,[ \t]*(.+)[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*(\[a-zA-Z]+),[ \t]*(\d+)[ \t]*,[ \t]*(\[NnYy])[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*\)[ \t]*,[ \t]*(--[ \t]*(.*)[ \t]*)*";
-        public static string final_pattern = @"^[ \t]*\(([a-zA-Z][a-zA-Z0-9_]*)[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*,[ \t]*([WwRr])[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([aAbB])[ \t]*,[ \t]*([a-zA-Z]+)[ \t]*,[ \t]*(.+)[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*(\[a-zA-Z]+),[ \t]*(\d+)[ \t]*,[ \t]*(\[NnYy])[ \t]*,[ \t]*(\[a-zA-Z]+)[ \t]*\)\);[ \t]*(--[ \t]*(.*)[ \t]*)*";
+        public static string pattern = @"^[ \t]*\(([a-zA-Z][a-zA-Z0-9_]*)[ \t]*,[ \t]*([a-zA-Z]+)[ \t]*,[ \t]*([a-zA-Z]+)[ \t]*,[ \t]*([RWrw])[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([aAbB])[ \t]*,[ \t]*(.+)[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([a-zA-Z]+)[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([nNyY])[ \t]*,[ \t]*([a-zA-Z]+)[ \t]*\)[ \t]*,[ \t]*(--[ \t]*(.*)[ \t]*)*";
+        public static string final_pattern = @"^[ \t]*\(([a-zA-Z][a-zA-Z0-9_]*)[ \t]*,[ \t]*([a-zA-Z]+)[ \t]*,[ \t]*([a-zA-Z]+)[ \t]*,[ \t]*([RWrw])[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([aAbB])[ \t]*,[ \t]*(.+)[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([a-zA-Z]+)[ \t]*,[ \t]*(\d+)[ \t]*,[ \t]*([nNyY])[ \t]*,[ \t]*([a-zA-Z]+)[ \t]*\)[ \t]*\)[ \t]*;[ \t]*(--[ \t]*(.*)[ \t]*)*";
 
         /* Class fields */
         public string Name { get; set; }
@@ -276,7 +277,7 @@ namespace MultiPortBreakDown
 
         public bool IsValidMemorySection()
         {
-            return Memory_section > 0;
+            return Memory_section >= 0;
         }
 
         public bool IsValidAnableEmerge()
@@ -307,18 +308,19 @@ namespace MultiPortBreakDown
         public static PortEntry PortEntryParse(string str_entry, bool last)
         {
             string actual = pattern;
-            /*if (last)
+            if (last)
                 actual = final_pattern;
             string[] fields = Regex.Split(str_entry, actual);
             if (fields.Length > 1)
             {
-                string comment = "";
-                if (fields.Length == 12)
-                    comment = fields[10];
-                if (!IsValidType(fields[6]) || !IsValidFPGA(fields[7]))
-                    return null;
-                return new PortEntry(fields[1], Int32.Parse(fields[2]), fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], comment, group);
-            }*/
+                for (int i = 1; i < fields.Length; i++)
+                    Console.WriteLine("i = " + i.ToString() + ": " + fields[i].ToString());
+                string comment = fields[13];
+                if (fields.Length > 14)
+                    comment = fields[14];
+                //Console.WriteLine(fields[13]);
+                return new PortEntry(fields[1], fields[2], fields[3], fields[4].ToUpper()[0], fields[5], fields[6].ToUpper()[0], fields[7], fields[8], fields[9], fields[10], fields[11].ToUpper()[0], fields[12], comment);
+            }
             return null;
         }
 

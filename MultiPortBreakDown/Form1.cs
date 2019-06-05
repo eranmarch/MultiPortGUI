@@ -177,7 +177,7 @@ namespace MultiPortBreakDown
                     PathToFile.Text = openFileDialog1.FileName;
                     File.WriteAllText(@"file_path.txt", openFileDialog1.FileName);
                     Console.WriteLine("Adding entries to table...");
-                    AddManyRegisters(fv.GetPortList());
+                    AddManyPorts(fv.GetPortList());
                 }
             }
         }
@@ -259,12 +259,14 @@ namespace MultiPortBreakDown
         {
             try
             {
+                Console.Write("Restoring ports from 'ports.txt': ");
                 FileStream fs = new FileStream(@"ports.txt", FileMode.Open, FileAccess.Read);
                 Ports = (List<PortEntry>)xs.Deserialize(fs);
                 fs.Close();
                 //dataGridView1.DataSource = Ports;
                 UpdateTable(Ports);
                 ColorInValid();
+                Console.WriteLine("SUCCESS");
             }
             catch (Exception e)
             {
@@ -335,7 +337,7 @@ namespace MultiPortBreakDown
                 UpdateDataBase();
         }
 
-        private void AddManyRegisters(List<PortEntry> entries)
+        private void AddManyPorts(List<PortEntry> entries)
         {
             Console.Write("Adding prots: ");
             foreach (PortEntry port in entries)
@@ -343,6 +345,7 @@ namespace MultiPortBreakDown
                 AddEntryToTable(port, true);
             }
             Console.Write("DONE\nValidating logic with table: ");
+            UpdateTable(Ports);
             OpenValidation();
             UpdateDataBase();
             Console.WriteLine("DONE");
@@ -552,6 +555,18 @@ namespace MultiPortBreakDown
                 if (index == -1)
                     index = 0;
                 TypeOpts.SelectedIndex = index;
+                index = BankBox.FindStringExact(pe.GetBank().ToString());
+                if (index == -1)
+                    index = 0;
+                BankBox.SelectedIndex = index;
+                index = pe.GetPriority();
+                if (index >= 100 || index <= 0)
+                    index = 99;
+                numericUpDown1.Value = index;
+                index = pe.GetMemory_section();
+                if (index < 0)
+                    index = 1;
+                numericUpDown2.Value = index;
 
                 if (pe.GetIsComment())
                     ErrorMessage.Text = "> ";

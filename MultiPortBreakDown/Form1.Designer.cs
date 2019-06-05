@@ -71,7 +71,6 @@ namespace MultiPortBreakDown
             this.R_WCombo = new System.Windows.Forms.ComboBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.ErrorMessage = new System.Windows.Forms.RichTextBox();
-            this.PriorityError = new System.Windows.Forms.RichTextBox();
             this.CommentButton = new System.Windows.Forms.Button();
             this.UnCommentButton = new System.Windows.Forms.Button();
             this.CloseButton = new System.Windows.Forms.Button();
@@ -541,15 +540,6 @@ namespace MultiPortBreakDown
             this.ErrorMessage.TabIndex = 60;
             this.ErrorMessage.Text = "";
             // 
-            // PriorityError
-            // 
-            this.PriorityError.Location = new System.Drawing.Point(2160, 754);
-            this.PriorityError.Name = "PriorityError";
-            this.PriorityError.ReadOnly = true;
-            this.PriorityError.Size = new System.Drawing.Size(523, 53);
-            this.PriorityError.TabIndex = 61;
-            this.PriorityError.Text = "";
-            // 
             // CommentButton
             // 
             this.CommentButton.Location = new System.Drawing.Point(253, 593);
@@ -591,7 +581,6 @@ namespace MultiPortBreakDown
             this.ClientSize = new System.Drawing.Size(2789, 1352);
             this.Controls.Add(this.UnCommentButton);
             this.Controls.Add(this.CommentButton);
-            this.Controls.Add(this.PriorityError);
             this.Controls.Add(this.ErrorMessage);
             this.Controls.Add(this.InsertButton);
             this.Controls.Add(this.Delete);
@@ -683,7 +672,6 @@ namespace MultiPortBreakDown
         private System.Windows.Forms.ComboBox R_WCombo;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.RichTextBox ErrorMessage;
-        private System.Windows.Forms.RichTextBox PriorityError;
         private System.Windows.Forms.Button CommentButton;
         private System.Windows.Forms.Button UnCommentButton;
         private System.Windows.Forms.Button CloseButton;

@@ -106,9 +106,16 @@ namespace MultiPortBreakDown
                 while (j < lines_correct.Length && lines_correct[j].Equals(""))
                     j++;
                 // Finished current state
+                if (j == lines_correct.Length)
+                    break;
                 if (lines_correct[j].Equals("0o0o0o0o0o0o0o0o0o0o0o0o0o00o0o0o0o0o0o00o0o0o0o0o0"))
                 {
                     j = j + 2;
+                    run_state++;
+                }
+                else if (lines_correct[j].Equals("0o0o0o0o0o0o0o0o0o0o0o0o0o00o0o0o0o0o0o00o0o0o0o0o0o"))
+                {
+                    j = j + 1;
                     run_state++;
                 }
                 if (run_state == (int)Cmp_mod.Port_names || run_state == (int)Cmp_mod.Port_entrys)
@@ -119,12 +126,15 @@ namespace MultiPortBreakDown
                         Match result = Regex.Match(lines[k], pattern);
                         if (result.Success)
                         {
+                            
                             string port_str = Regex.Split(lines[k], pattern)[1];
                             PortEntry pe = PortEntry.PortEntryParse(port_str, lines[k + 1].Equals(lines_correct[j - 1]));
                             if (pe != null)
                             {
+                                MessageBox.Show("Comment port!");
                                 pe.SetIsComment(true);
                                 Ports.Add(pe);
+                                continue;
                             }
                         }
                         // Save Names
@@ -138,7 +148,8 @@ namespace MultiPortBreakDown
                         }
                         else if (run_state == (int)Cmp_mod.Port_entrys)
                         {
-                            PortEntry entry = PortEntry.PortEntryParse(lines[k], lines[k + 1].Equals(lines_correct[j - 1]));
+                            bool last = lines[k + 1].Equals(lines_correct[j]);
+                            PortEntry entry = PortEntry.PortEntryParse(lines[k], last);
                             if (entry != null)
                             {
                                 //MessageBox.Show(entry.GetName() + " " + entry.GetName().Length.ToString());
@@ -149,6 +160,11 @@ namespace MultiPortBreakDown
                             {
                                 MessageBox.Show("COMPILATION 2: Parsing error at line " + (k + 1));
                                 return false;
+                            }
+                            if (last) {
+                                //j--;
+                                //k++;
+                                break;
                             }
                         }
                     }
