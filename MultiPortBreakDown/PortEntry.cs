@@ -319,7 +319,14 @@ namespace MultiPortBreakDown
                 if (fields.Length > 14)
                     comment = fields[14];
                 //Console.WriteLine(fields[13]);
-                return new PortEntry(fields[1], fields[2], fields[3], fields[4].ToUpper()[0], fields[5], fields[6].ToUpper()[0], fields[7], fields[8], fields[9], fields[10], fields[11].ToUpper()[0], fields[12], comment);
+                try
+                {
+                    return new PortEntry(fields[1], fields[2], fields[3], fields[4].ToUpper()[0], fields[5], fields[6].ToUpper()[0], fields[7], fields[8], fields[9], fields[10], fields[11].ToUpper()[0], fields[12], comment);
+                }
+                catch
+                {
+                    return null;
+                }
             }
             return null;
         }

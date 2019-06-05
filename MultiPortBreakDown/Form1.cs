@@ -265,7 +265,7 @@ namespace MultiPortBreakDown
                 fs.Close();
                 //dataGridView1.DataSource = Ports;
                 UpdateTable(Ports);
-                ColorInValid();
+                //ColorInValid();
                 Console.WriteLine("SUCCESS");
             }
             catch (Exception e)
@@ -619,5 +619,10 @@ namespace MultiPortBreakDown
             dataGridView1.Size = new Size(this.Size.Width, this.Size.Height - this.panel2.Size.Height - 45);
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            this.AutoSize = true;
+            ColorInValid();
+        }
     }
 }
