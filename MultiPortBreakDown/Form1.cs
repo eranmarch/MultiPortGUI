@@ -323,9 +323,9 @@ namespace MultiPortBreakDown
                 Ports.RemoveAt(index);
             }
             SearchBox_TextChanged(sender, e);
-            OpenValidation();
             UpdateDataBase();
             UpdateTable(Ports);
+            OpenValidation();
             saved = false;
         }
 
