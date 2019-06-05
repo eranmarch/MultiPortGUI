@@ -439,7 +439,7 @@ namespace MultiPortBreakDown
                     }
                     if ('#' == line[0])
                         continue;
-                    if (line.Equals("0o0o0o0o0o0o0o0o0o0o0o0o0o00o0o0o0o0o0o00o0o0o0o0o0"))
+                    if (line.Equals("0o0o0o0o0o0o0o0o0o0o0o0o0o00o0o0o0o0o0o00o0o0o0o0o0o"))
                         break;
                     res += line + '\n';
                 }

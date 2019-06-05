@@ -389,17 +389,21 @@ namespace MultiPortBreakDown
             string res = "";
             if (IsComment)
                 res += "--";
-            res += "\t\t\t\t" + "(" + Name + GetSpaces(39 - Name.Length) + ",";
+            res += "   " + "(" + Name + GetSpaces(23 - Name.Length) + ",";
 
-            string adrs = ValidField.ToString();
-            res += GetSpaces(8 - adrs.Length) + adrs + ",";
-            res += "  " + Type.ToString() + ",";
+            string valid = ValidField.ToString().ToLower();
+            res += valid + GetSpaces(11 - valid.Length) + ",";
+            string type = Type.ToString();
+            res += " " + type + GetSpaces(14 - type.Length)  + ",";
             string write_read = R_W.ToString();
             string data_size = Data_size.ToString();
-            res += GetSpaces(3 - write_read.Length) + write_read + "," + GetSpaces(3 - data_size.Length) + data_size + ",";
-            res += " " + Bank + GetSpaces(4) + ",";
-            res += " " + Memory_size + GetSpaces(4 - Memory_size.Length) + ",";
-            res += Memory_section + ", " + Relative_address.ToString() + ", " + Priority.ToString() + ", " + Anable_emerge + ", " + Read_bk_address + ")";
+            res += " " + write_read + "  ," + " " + GetSpaces(3 - data_size.Length) + data_size + " ,";
+            res += " " + Bank + "  ,";
+            res += "   " + Memory_size + GetSpaces(10 - Memory_size.Length) + ",";
+            string Rel_addr = Relative_address.ToString().ToLower();
+            res += "   " + Memory_section + "   , " + Rel_addr + GetSpaces(7 - Rel_addr.Length) + ", ";
+            string prio = Priority.ToString();
+            res += "  " + GetSpaces(2 - prio.Length) + prio + " , " + Anable_emerge + "   , " + Read_bk_address + ")";
 
             if (!last)
                 res += ",";
