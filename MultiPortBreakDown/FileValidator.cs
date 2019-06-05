@@ -126,12 +126,13 @@ namespace MultiPortBreakDown
                         Match result = Regex.Match(lines[k], pattern);
                         if (result.Success)
                         {
-                            
+                            if (run_state == (int)Cmp_mod.Port_names)
+                                continue;
                             string port_str = Regex.Split(lines[k], pattern)[1];
                             PortEntry pe = PortEntry.PortEntryParse(port_str, lines[k + 1].Equals(lines_correct[j - 1]));
                             if (pe != null)
                             {
-                                MessageBox.Show("Comment port!");
+                                //MessageBox.Show("Comment port!");
                                 pe.SetIsComment(true);
                                 Ports.Add(pe);
                                 continue;
