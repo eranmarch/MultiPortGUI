@@ -17,7 +17,7 @@ namespace MultiPortBreakDown
     {
         public XmlSerializer xs;
         List<PortEntry> Ports;
-        bool saved = false;
+        bool saved = true;
 
         public Form1()
         {
@@ -508,7 +508,10 @@ namespace MultiPortBreakDown
             if (PathToFile.Text.Equals(""))
                 return;
             if (saved)
+            {
                 PathToFile.Text = "";
+                File.WriteAllText(@"file_path.txt", "");
+            }
             else
             {
                 DialogResult dialogResult = MessageBox.Show("Are you sure you want to close the file without saving?", "Warning", MessageBoxButtons.YesNo);
@@ -516,6 +519,7 @@ namespace MultiPortBreakDown
                 {
                     //SaveButton_Click(sender, e);
                     PathToFile.Text = "";
+                    File.WriteAllText(@"file_path.txt", "");
                 }
                 else if (dialogResult == DialogResult.No)
                 {
@@ -582,11 +586,6 @@ namespace MultiPortBreakDown
             if (e.KeyCode == Keys.Delete)
                 Delete_Click(sender, e);
         }
-
-        /*private void frm_sizeChanged(object sender, EventArgs e)
-        {
-            dataGridView1.Size = new Size(this.Size.Width, this.Size.Height - this.panel4.Size.Height - 45);
-        }*/
 
         private void CommentButton_Click(object sender, EventArgs e)
         {

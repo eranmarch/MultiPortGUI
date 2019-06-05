@@ -143,6 +143,7 @@ namespace MultiPortBreakDown
                             if (!IsValidPortName(lines[k]))
                             {
                                 MessageBox.Show("COMPILATION 1: Parsing error at line " + (k + 1));
+                                Console.WriteLine("COMPILATION 1: Parsing error at line " + (k + 1) + "\nFinishing compilation....");
                                 return false;
                             }
                         }
@@ -159,6 +160,7 @@ namespace MultiPortBreakDown
                             else
                             {
                                 MessageBox.Show("COMPILATION 2: Parsing error at line " + (k + 1));
+                                Console.WriteLine("COMPILATION 2: Parsing error at line " + (k + 1) + "\nFinishing compilation....");
                                 return false;
                             }
                             if (last) {
@@ -179,6 +181,7 @@ namespace MultiPortBreakDown
                     if (!lines_correct[j].Equals(lines[i]))
                     {
                         MessageBox.Show("COMPILATION 3: Invalid file\n" + lines[i] + "\n" + lines_correct[j]);
+                        Console.WriteLine("COMPILATION 3: Invalid file\n" + lines[i] + "!=" + lines_correct[j] + "\nFinishing compilation....");
                         return false;
                     }
                     j++;
