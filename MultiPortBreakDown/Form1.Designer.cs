@@ -30,6 +30,7 @@ namespace MultiPortBreakDown
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panel1 = new System.Windows.Forms.Panel();
             this.CloseButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
@@ -75,15 +76,18 @@ namespace MultiPortBreakDown
             this.CommentButton = new System.Windows.Forms.Button();
             this.UnCommentButton = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.CloseButton);
             this.panel1.Controls.Add(this.SaveButton);
             this.panel1.Controls.Add(this.SaveAstButton);
@@ -294,7 +298,7 @@ namespace MultiPortBreakDown
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(45, 277);
+            this.label10.Location = new System.Drawing.Point(12, 8);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(53, 17);
             this.label10.TabIndex = 41;
@@ -303,7 +307,7 @@ namespace MultiPortBreakDown
             // searchBox
             // 
             this.searchBox.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.searchBox.Location = new System.Drawing.Point(103, 278);
+            this.searchBox.Location = new System.Drawing.Point(70, 9);
             this.searchBox.Name = "searchBox";
             this.searchBox.Size = new System.Drawing.Size(213, 20);
             this.searchBox.TabIndex = 40;
@@ -451,7 +455,7 @@ namespace MultiPortBreakDown
             // 
             // ClearButton
             // 
-            this.ClearButton.Location = new System.Drawing.Point(379, 276);
+            this.ClearButton.Location = new System.Drawing.Point(357, 6);
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.Size = new System.Drawing.Size(75, 23);
             this.ClearButton.TabIndex = 28;
@@ -461,7 +465,7 @@ namespace MultiPortBreakDown
             // 
             // InsertButton
             // 
-            this.InsertButton.Location = new System.Drawing.Point(676, 278);
+            this.InsertButton.Location = new System.Drawing.Point(654, 8);
             this.InsertButton.Name = "InsertButton";
             this.InsertButton.Size = new System.Drawing.Size(81, 22);
             this.InsertButton.TabIndex = 27;
@@ -471,7 +475,7 @@ namespace MultiPortBreakDown
             // 
             // Load
             // 
-            this.Load.Location = new System.Drawing.Point(477, 276);
+            this.Load.Location = new System.Drawing.Point(455, 6);
             this.Load.Name = "Load";
             this.Load.Size = new System.Drawing.Size(75, 23);
             this.Load.TabIndex = 25;
@@ -481,7 +485,7 @@ namespace MultiPortBreakDown
             // 
             // Delete
             // 
-            this.Delete.Location = new System.Drawing.Point(573, 277);
+            this.Delete.Location = new System.Drawing.Point(551, 7);
             this.Delete.Name = "Delete";
             this.Delete.Size = new System.Drawing.Size(81, 23);
             this.Delete.TabIndex = 26;
@@ -517,39 +521,34 @@ namespace MultiPortBreakDown
             // 
             // CommentButton
             // 
-            this.CommentButton.Location = new System.Drawing.Point(106, 218);
+            this.CommentButton.Image = ((System.Drawing.Image)(resources.GetObject("CommentButton.Image")));
+            this.CommentButton.Location = new System.Drawing.Point(157, 218);
             this.CommentButton.Name = "CommentButton";
-            this.CommentButton.Size = new System.Drawing.Size(75, 23);
+            this.CommentButton.Size = new System.Drawing.Size(24, 23);
             this.CommentButton.TabIndex = 62;
-            this.CommentButton.Text = "Comment";
             this.CommentButton.UseVisualStyleBackColor = true;
             this.CommentButton.Click += new System.EventHandler(this.CommentButton_Click);
             // 
             // UnCommentButton
             // 
+            this.UnCommentButton.Image = ((System.Drawing.Image)(resources.GetObject("UnCommentButton.Image")));
             this.UnCommentButton.Location = new System.Drawing.Point(211, 218);
             this.UnCommentButton.Name = "UnCommentButton";
-            this.UnCommentButton.Size = new System.Drawing.Size(75, 23);
+            this.UnCommentButton.Size = new System.Drawing.Size(22, 23);
             this.UnCommentButton.TabIndex = 63;
-            this.UnCommentButton.Text = "UnComment";
             this.UnCommentButton.UseVisualStyleBackColor = true;
             this.UnCommentButton.Click += new System.EventHandler(this.UnCommentButton_Click);
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.panel3);
             this.panel2.Controls.Add(this.panel1);
             this.panel2.Controls.Add(this.UnCommentButton);
-            this.panel2.Controls.Add(this.InsertButton);
-            this.panel2.Controls.Add(this.Delete);
             this.panel2.Controls.Add(this.CommentButton);
-            this.panel2.Controls.Add(this.ClearButton);
             this.panel2.Controls.Add(this.PortNameText);
-            this.panel2.Controls.Add(this.Load);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.CommentText);
-            this.panel2.Controls.Add(this.label10);
             this.panel2.Controls.Add(this.ErrorMessage);
-            this.panel2.Controls.Add(this.searchBox);
             this.panel2.Controls.Add(this.label8);
             this.panel2.Controls.Add(this.label12);
             this.panel2.Controls.Add(this.MemorySizeText);
@@ -579,6 +578,20 @@ namespace MultiPortBreakDown
             this.panel2.Size = new System.Drawing.Size(1046, 339);
             this.panel2.TabIndex = 64;
             // 
+            // panel3
+            // 
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.ClearButton);
+            this.panel3.Controls.Add(this.Load);
+            this.panel3.Controls.Add(this.Delete);
+            this.panel3.Controls.Add(this.InsertButton);
+            this.panel3.Controls.Add(this.label10);
+            this.panel3.Controls.Add(this.searchBox);
+            this.panel3.Location = new System.Drawing.Point(60, 280);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(746, 39);
+            this.panel3.TabIndex = 64;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -598,6 +611,8 @@ namespace MultiPortBreakDown
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -649,6 +664,7 @@ namespace MultiPortBreakDown
         private System.Windows.Forms.Button UnCommentButton;
         private System.Windows.Forms.Button CloseButton;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel3;
     }
 }
 
