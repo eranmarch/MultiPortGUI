@@ -307,7 +307,7 @@ namespace MultiPortBreakDown
         public static PortEntry PortEntryParse(string str_entry, bool last)
         {
             string actual = pattern;
-            if (last)
+            /*if (last)
                 actual = final_pattern;
             string[] fields = Regex.Split(str_entry, actual);
             if (fields.Length > 1)
@@ -318,7 +318,7 @@ namespace MultiPortBreakDown
                 if (!IsValidType(fields[6]) || !IsValidFPGA(fields[7]))
                     return null;
                 return new PortEntry(fields[1], Int32.Parse(fields[2]), fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], comment, group);
-            }
+            }*/
             return null;
         }
 
