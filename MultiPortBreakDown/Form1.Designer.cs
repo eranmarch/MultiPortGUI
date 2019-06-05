@@ -645,7 +645,7 @@ namespace MultiPortBreakDown
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.dataGridView1);
             this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
-            this.MinimumSize = new System.Drawing.Size(2779, 1338);
+            this.MinimumSize = new System.Drawing.Size(2821, 1454);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
