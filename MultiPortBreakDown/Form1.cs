@@ -598,5 +598,11 @@ namespace MultiPortBreakDown
             OpenValidation();
             UpdateDataBase();
         }
+
+        private void frm_sizeChanged(object sender, EventArgs e)
+        {
+            dataGridView1.Size = new Size(this.Size.Width, this.Size.Height - this.panel2.Size.Height - 45);
+        }
+
     }
 }

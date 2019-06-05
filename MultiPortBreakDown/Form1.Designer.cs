@@ -72,13 +72,14 @@ namespace MultiPortBreakDown
             this.R_WCombo = new System.Windows.Forms.ComboBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.ErrorMessage = new System.Windows.Forms.RichTextBox();
-            this.PriorityError = new System.Windows.Forms.RichTextBox();
             this.CommentButton = new System.Windows.Forms.Button();
             this.UnCommentButton = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -89,7 +90,7 @@ namespace MultiPortBreakDown
             this.panel1.Controls.Add(this.OpenButton);
             this.panel1.Controls.Add(this.PathToFile);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(54, 26);
+            this.panel1.Location = new System.Drawing.Point(48, 23);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(891, 52);
             this.panel1.TabIndex = 0;
@@ -154,7 +155,7 @@ namespace MultiPortBreakDown
             // 
             // PortNameText
             // 
-            this.PortNameText.Location = new System.Drawing.Point(156, 112);
+            this.PortNameText.Location = new System.Drawing.Point(166, 99);
             this.PortNameText.Name = "PortNameText";
             this.PortNameText.Size = new System.Drawing.Size(150, 20);
             this.PortNameText.TabIndex = 8;
@@ -164,7 +165,7 @@ namespace MultiPortBreakDown
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(57, 113);
+            this.label2.Location = new System.Drawing.Point(67, 100);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(73, 17);
             this.label2.TabIndex = 7;
@@ -174,7 +175,7 @@ namespace MultiPortBreakDown
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(57, 177);
+            this.label8.Location = new System.Drawing.Point(67, 164);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(67, 17);
             this.label8.TabIndex = 24;
@@ -182,7 +183,7 @@ namespace MultiPortBreakDown
             // 
             // CommentText
             // 
-            this.CommentText.Location = new System.Drawing.Point(156, 176);
+            this.CommentText.Location = new System.Drawing.Point(166, 163);
             this.CommentText.Name = "CommentText";
             this.CommentText.Size = new System.Drawing.Size(150, 20);
             this.CommentText.TabIndex = 23;
@@ -193,10 +194,11 @@ namespace MultiPortBreakDown
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 352);
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 345);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(1022, 203);
+            this.dataGridView1.Size = new System.Drawing.Size(1046, 228);
             this.dataGridView1.TabIndex = 29;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.DataGridView1_SelectionChanged);
             // 
@@ -210,7 +212,7 @@ namespace MultiPortBreakDown
             "SEQUENTIAL",
             "SPRINT",
             "MANAGER"});
-            this.TypeOpts.Location = new System.Drawing.Point(694, 140);
+            this.TypeOpts.Location = new System.Drawing.Point(680, 130);
             this.TypeOpts.Name = "TypeOpts";
             this.TypeOpts.Size = new System.Drawing.Size(77, 21);
             this.TypeOpts.TabIndex = 31;
@@ -219,7 +221,7 @@ namespace MultiPortBreakDown
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(603, 141);
+            this.label7.Location = new System.Drawing.Point(589, 131);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(65, 17);
             this.label7.TabIndex = 30;
@@ -229,7 +231,7 @@ namespace MultiPortBreakDown
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(362, 141);
+            this.label3.Location = new System.Drawing.Point(349, 126);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(39, 17);
             this.label3.TabIndex = 32;
@@ -239,7 +241,7 @@ namespace MultiPortBreakDown
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(362, 172);
+            this.label4.Location = new System.Drawing.Point(349, 157);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(114, 17);
             this.label4.TabIndex = 33;
@@ -249,7 +251,7 @@ namespace MultiPortBreakDown
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(362, 203);
+            this.label5.Location = new System.Drawing.Point(349, 188);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(126, 17);
             this.label5.TabIndex = 34;
@@ -259,7 +261,7 @@ namespace MultiPortBreakDown
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(603, 205);
+            this.label6.Location = new System.Drawing.Point(589, 195);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(52, 17);
             this.label6.TabIndex = 35;
@@ -267,7 +269,7 @@ namespace MultiPortBreakDown
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(714, 205);
+            this.numericUpDown1.Location = new System.Drawing.Point(700, 195);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             99,
             0,
@@ -292,7 +294,7 @@ namespace MultiPortBreakDown
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(51, 314);
+            this.label10.Location = new System.Drawing.Point(45, 277);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(53, 17);
             this.label10.TabIndex = 41;
@@ -301,7 +303,7 @@ namespace MultiPortBreakDown
             // searchBox
             // 
             this.searchBox.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.searchBox.Location = new System.Drawing.Point(109, 315);
+            this.searchBox.Location = new System.Drawing.Point(103, 278);
             this.searchBox.Name = "searchBox";
             this.searchBox.Size = new System.Drawing.Size(213, 20);
             this.searchBox.TabIndex = 40;
@@ -309,7 +311,7 @@ namespace MultiPortBreakDown
             // 
             // numericUpDown2
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(714, 238);
+            this.numericUpDown2.Location = new System.Drawing.Point(700, 228);
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(57, 20);
             this.numericUpDown2.TabIndex = 43;
@@ -318,7 +320,7 @@ namespace MultiPortBreakDown
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(603, 239);
+            this.label9.Location = new System.Drawing.Point(589, 229);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(107, 17);
             this.label9.TabIndex = 42;
@@ -328,7 +330,7 @@ namespace MultiPortBreakDown
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(362, 230);
+            this.label11.Location = new System.Drawing.Point(349, 215);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(97, 17);
             this.label11.TabIndex = 44;
@@ -338,7 +340,7 @@ namespace MultiPortBreakDown
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(57, 144);
+            this.label12.Location = new System.Drawing.Point(67, 131);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(87, 17);
             this.label12.TabIndex = 46;
@@ -346,7 +348,7 @@ namespace MultiPortBreakDown
             // 
             // MemorySizeText
             // 
-            this.MemorySizeText.Location = new System.Drawing.Point(156, 144);
+            this.MemorySizeText.Location = new System.Drawing.Point(166, 131);
             this.MemorySizeText.Name = "MemorySizeText";
             this.MemorySizeText.Size = new System.Drawing.Size(150, 20);
             this.MemorySizeText.TabIndex = 47;
@@ -364,7 +366,7 @@ namespace MultiPortBreakDown
             "128",
             "256",
             "512"});
-            this.DataSizeBox.Location = new System.Drawing.Point(694, 107);
+            this.DataSizeBox.Location = new System.Drawing.Point(680, 97);
             this.DataSizeBox.Name = "DataSizeBox";
             this.DataSizeBox.Size = new System.Drawing.Size(77, 21);
             this.DataSizeBox.TabIndex = 49;
@@ -373,7 +375,7 @@ namespace MultiPortBreakDown
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(603, 109);
+            this.label13.Location = new System.Drawing.Point(589, 99);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(67, 17);
             this.label13.TabIndex = 48;
@@ -382,7 +384,7 @@ namespace MultiPortBreakDown
             // RelativeAddressCheckBox
             // 
             this.RelativeAddressCheckBox.AutoSize = true;
-            this.RelativeAddressCheckBox.Location = new System.Drawing.Point(494, 175);
+            this.RelativeAddressCheckBox.Location = new System.Drawing.Point(481, 160);
             this.RelativeAddressCheckBox.Name = "RelativeAddressCheckBox";
             this.RelativeAddressCheckBox.Size = new System.Drawing.Size(15, 14);
             this.RelativeAddressCheckBox.TabIndex = 51;
@@ -391,7 +393,7 @@ namespace MultiPortBreakDown
             // EmergencyCheckBox
             // 
             this.EmergencyCheckBox.AutoSize = true;
-            this.EmergencyCheckBox.Location = new System.Drawing.Point(494, 204);
+            this.EmergencyCheckBox.Location = new System.Drawing.Point(481, 189);
             this.EmergencyCheckBox.Name = "EmergencyCheckBox";
             this.EmergencyCheckBox.Size = new System.Drawing.Size(15, 14);
             this.EmergencyCheckBox.TabIndex = 52;
@@ -400,7 +402,7 @@ namespace MultiPortBreakDown
             // DebugCheckBox
             // 
             this.DebugCheckBox.AutoSize = true;
-            this.DebugCheckBox.Location = new System.Drawing.Point(494, 234);
+            this.DebugCheckBox.Location = new System.Drawing.Point(481, 219);
             this.DebugCheckBox.Name = "DebugCheckBox";
             this.DebugCheckBox.Size = new System.Drawing.Size(15, 14);
             this.DebugCheckBox.TabIndex = 53;
@@ -409,7 +411,7 @@ namespace MultiPortBreakDown
             // ValidCheckBox
             // 
             this.ValidCheckBox.AutoSize = true;
-            this.ValidCheckBox.Location = new System.Drawing.Point(494, 117);
+            this.ValidCheckBox.Location = new System.Drawing.Point(481, 102);
             this.ValidCheckBox.Name = "ValidCheckBox";
             this.ValidCheckBox.Size = new System.Drawing.Size(15, 14);
             this.ValidCheckBox.TabIndex = 55;
@@ -419,7 +421,7 @@ namespace MultiPortBreakDown
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(362, 112);
+            this.label14.Location = new System.Drawing.Point(349, 97);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(39, 17);
             this.label14.TabIndex = 54;
@@ -432,7 +434,7 @@ namespace MultiPortBreakDown
             this.BankBox.Items.AddRange(new object[] {
             "A",
             "B"});
-            this.BankBox.Location = new System.Drawing.Point(694, 172);
+            this.BankBox.Location = new System.Drawing.Point(680, 162);
             this.BankBox.Name = "BankBox";
             this.BankBox.Size = new System.Drawing.Size(77, 21);
             this.BankBox.TabIndex = 57;
@@ -441,7 +443,7 @@ namespace MultiPortBreakDown
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(603, 173);
+            this.label15.Location = new System.Drawing.Point(589, 163);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(40, 17);
             this.label15.TabIndex = 56;
@@ -449,7 +451,7 @@ namespace MultiPortBreakDown
             // 
             // ClearButton
             // 
-            this.ClearButton.Location = new System.Drawing.Point(374, 311);
+            this.ClearButton.Location = new System.Drawing.Point(379, 276);
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.Size = new System.Drawing.Size(75, 23);
             this.ClearButton.TabIndex = 28;
@@ -459,7 +461,7 @@ namespace MultiPortBreakDown
             // 
             // InsertButton
             // 
-            this.InsertButton.Location = new System.Drawing.Point(671, 313);
+            this.InsertButton.Location = new System.Drawing.Point(676, 278);
             this.InsertButton.Name = "InsertButton";
             this.InsertButton.Size = new System.Drawing.Size(81, 22);
             this.InsertButton.TabIndex = 27;
@@ -469,7 +471,7 @@ namespace MultiPortBreakDown
             // 
             // Load
             // 
-            this.Load.Location = new System.Drawing.Point(472, 311);
+            this.Load.Location = new System.Drawing.Point(477, 276);
             this.Load.Name = "Load";
             this.Load.Size = new System.Drawing.Size(75, 23);
             this.Load.TabIndex = 25;
@@ -479,7 +481,7 @@ namespace MultiPortBreakDown
             // 
             // Delete
             // 
-            this.Delete.Location = new System.Drawing.Point(568, 312);
+            this.Delete.Location = new System.Drawing.Point(573, 277);
             this.Delete.Name = "Delete";
             this.Delete.Size = new System.Drawing.Size(81, 23);
             this.Delete.TabIndex = 26;
@@ -494,7 +496,7 @@ namespace MultiPortBreakDown
             this.R_WCombo.Items.AddRange(new object[] {
             "R",
             "W"});
-            this.R_WCombo.Location = new System.Drawing.Point(494, 143);
+            this.R_WCombo.Location = new System.Drawing.Point(481, 128);
             this.R_WCombo.Name = "R_WCombo";
             this.R_WCombo.Size = new System.Drawing.Size(77, 21);
             this.R_WCombo.TabIndex = 59;
@@ -505,27 +507,17 @@ namespace MultiPortBreakDown
             // 
             // ErrorMessage
             // 
-            this.ErrorMessage.Location = new System.Drawing.Point(810, 109);
-            this.ErrorMessage.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.ErrorMessage.Location = new System.Drawing.Point(805, 79);
+            this.ErrorMessage.Margin = new System.Windows.Forms.Padding(1);
             this.ErrorMessage.Name = "ErrorMessage";
             this.ErrorMessage.ReadOnly = true;
             this.ErrorMessage.Size = new System.Drawing.Size(199, 180);
             this.ErrorMessage.TabIndex = 60;
             this.ErrorMessage.Text = "";
             // 
-            // PriorityError
-            // 
-            this.PriorityError.Location = new System.Drawing.Point(810, 316);
-            this.PriorityError.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
-            this.PriorityError.Name = "PriorityError";
-            this.PriorityError.ReadOnly = true;
-            this.PriorityError.Size = new System.Drawing.Size(199, 25);
-            this.PriorityError.TabIndex = 61;
-            this.PriorityError.Text = "";
-            // 
             // CommentButton
             // 
-            this.CommentButton.Location = new System.Drawing.Point(95, 249);
+            this.CommentButton.Location = new System.Drawing.Point(106, 218);
             this.CommentButton.Name = "CommentButton";
             this.CommentButton.Size = new System.Drawing.Size(75, 23);
             this.CommentButton.TabIndex = 62;
@@ -535,7 +527,7 @@ namespace MultiPortBreakDown
             // 
             // UnCommentButton
             // 
-            this.UnCommentButton.Location = new System.Drawing.Point(200, 249);
+            this.UnCommentButton.Location = new System.Drawing.Point(211, 218);
             this.UnCommentButton.Name = "UnCommentButton";
             this.UnCommentButton.Size = new System.Drawing.Size(75, 23);
             this.UnCommentButton.TabIndex = 63;
@@ -543,59 +535,70 @@ namespace MultiPortBreakDown
             this.UnCommentButton.UseVisualStyleBackColor = true;
             this.UnCommentButton.Click += new System.EventHandler(this.UnCommentButton_Click);
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.panel1);
+            this.panel2.Controls.Add(this.UnCommentButton);
+            this.panel2.Controls.Add(this.InsertButton);
+            this.panel2.Controls.Add(this.Delete);
+            this.panel2.Controls.Add(this.CommentButton);
+            this.panel2.Controls.Add(this.ClearButton);
+            this.panel2.Controls.Add(this.PortNameText);
+            this.panel2.Controls.Add(this.Load);
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Controls.Add(this.CommentText);
+            this.panel2.Controls.Add(this.label10);
+            this.panel2.Controls.Add(this.ErrorMessage);
+            this.panel2.Controls.Add(this.searchBox);
+            this.panel2.Controls.Add(this.label8);
+            this.panel2.Controls.Add(this.label12);
+            this.panel2.Controls.Add(this.MemorySizeText);
+            this.panel2.Controls.Add(this.ValidCheckBox);
+            this.panel2.Controls.Add(this.label3);
+            this.panel2.Controls.Add(this.BankBox);
+            this.panel2.Controls.Add(this.R_WCombo);
+            this.panel2.Controls.Add(this.label15);
+            this.panel2.Controls.Add(this.label4);
+            this.panel2.Controls.Add(this.DataSizeBox);
+            this.panel2.Controls.Add(this.label13);
+            this.panel2.Controls.Add(this.label5);
+            this.panel2.Controls.Add(this.numericUpDown2);
+            this.panel2.Controls.Add(this.label11);
+            this.panel2.Controls.Add(this.label9);
+            this.panel2.Controls.Add(this.RelativeAddressCheckBox);
+            this.panel2.Controls.Add(this.label14);
+            this.panel2.Controls.Add(this.EmergencyCheckBox);
+            this.panel2.Controls.Add(this.numericUpDown1);
+            this.panel2.Controls.Add(this.DebugCheckBox);
+            this.panel2.Controls.Add(this.label6);
+            this.panel2.Controls.Add(this.label7);
+            this.panel2.Controls.Add(this.TypeOpts);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1046, 339);
+            this.panel2.TabIndex = 64;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1046, 573);
-            this.Controls.Add(this.UnCommentButton);
-            this.Controls.Add(this.CommentButton);
-            this.Controls.Add(this.PriorityError);
-            this.Controls.Add(this.ErrorMessage);
-            this.Controls.Add(this.InsertButton);
-            this.Controls.Add(this.Delete);
-            this.Controls.Add(this.ClearButton);
-            this.Controls.Add(this.Load);
-            this.Controls.Add(this.R_WCombo);
-            this.Controls.Add(this.BankBox);
-            this.Controls.Add(this.label15);
-            this.Controls.Add(this.ValidCheckBox);
-            this.Controls.Add(this.label14);
-            this.Controls.Add(this.DebugCheckBox);
-            this.Controls.Add(this.EmergencyCheckBox);
-            this.Controls.Add(this.RelativeAddressCheckBox);
-            this.Controls.Add(this.DataSizeBox);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.MemorySizeText);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.numericUpDown2);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.searchBox);
-            this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.TypeOpts);
-            this.Controls.Add(this.label7);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.CommentText);
-            this.Controls.Add(this.PortNameText);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.panel1);
+            this.MinimumSize = new System.Drawing.Size(1062, 612);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Resize += new System.EventHandler(this.frm_sizeChanged);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -642,10 +645,10 @@ namespace MultiPortBreakDown
         private System.Windows.Forms.ComboBox R_WCombo;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.RichTextBox ErrorMessage;
-        private System.Windows.Forms.RichTextBox PriorityError;
         private System.Windows.Forms.Button CommentButton;
         private System.Windows.Forms.Button UnCommentButton;
         private System.Windows.Forms.Button CloseButton;
+        private System.Windows.Forms.Panel panel2;
     }
 }
 
