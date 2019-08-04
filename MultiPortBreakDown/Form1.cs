@@ -18,6 +18,7 @@ namespace MultiPortBreakDown
         public XmlSerializer xs;
         List<PortEntry> Ports;
         bool saved = true;
+        string path_to_file = "";
 
         public Form1()
         {
@@ -174,7 +175,7 @@ namespace MultiPortBreakDown
                 FileValidator fv = new FileValidator(openFileDialog1.FileName);
                 if (fv.IsFileValid())
                 {
-                    PathToFile.Text = openFileDialog1.FileName;
+                    UpdateFilePath(openFileDialog1.FileName);
                     File.WriteAllText(@"file_path.txt", openFileDialog1.FileName);
                     Console.WriteLine("Adding entries to table...");
                     AddManyPorts(fv.GetPortList());
@@ -252,7 +253,7 @@ namespace MultiPortBreakDown
             FileStream fs = new FileStream(@"ports.txt", FileMode.Create, FileAccess.Write);
             xs.Serialize(fs, Ports);
             fs.Close();
-            File.WriteAllText(@"file_path.txt", PathToFile.Text);
+            File.WriteAllText(@"file_path.txt", path_to_file);
         }
 
         private void ReadDataBase()
@@ -276,13 +277,13 @@ namespace MultiPortBreakDown
             try
             {
                 Console.Write("Restoring opened file from 'file_path.txt': ");
-                PathToFile.Text = File.ReadAllText(@"file_path.txt");
+                UpdateFilePath(File.ReadAllText(@"file_path.txt"));
                 Console.WriteLine("SUCCESS");
             }
             catch (Exception e)
             {
                 Console.WriteLine("FAILED\nException caught: " + e.Message + "\nReseting path...");
-                PathToFile.Text = "";
+                UpdateFilePath("");
             }
         }
 
@@ -362,8 +363,8 @@ namespace MultiPortBreakDown
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                PathToFile.Text = saveFileDialog1.FileName;
-                File.WriteAllText(@"file_path.txt", saveFileDialog1.FileName);
+                UpdateFilePath(saveFileDialog1.FileName);
+                File.WriteAllText(@"file_path.txt", path_to_file);
                 SaveButton_Click(sender, e);
             }
         }
@@ -381,7 +382,7 @@ namespace MultiPortBreakDown
         // FIX AS FAST AS POSSIBLE
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            if (PathToFile.Text.Equals(""))
+            if (path_to_file.Equals(""))
             {
                 SaveAsButton_Click(sender, e);
                 return;
@@ -392,9 +393,9 @@ namespace MultiPortBreakDown
                 file = new StreamReader("mycorrect.vhd");
                 string line;
                 string res = "";
-                string title = Path.GetFileNameWithoutExtension(PathToFile.Text);
+                string title = Path.GetFileNameWithoutExtension(path_to_file);
                 string date = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
-                string introDec = "Original path: " + PathToFile.Text + "</br>The following is a documentation for " + title + ". The table " +
+                string introDec = "Original path: " + path_to_file + "</br>The following is a documentation for " + title + ". The table " +
                     "contains the registers created using the GUI.";
                 //MessageBox.Show(Path.GetFileNameWithoutExtension(PathToFile.Text));
                 string doc = "<html><head><title>" + title + " Documentation" + "</title>";
@@ -459,9 +460,9 @@ namespace MultiPortBreakDown
                 file.Close();
                 try
                 {
-                    File.WriteAllText(PathToFile.Text, res);
+                    File.WriteAllText(path_to_file, res);
                     //MessageBox.Show(Path.GetDirectoryName(PathToFile.Text) + "\\" + title + "_doc.txt");
-                    File.WriteAllText(Path.GetDirectoryName(PathToFile.Text) + "\\" + title + "_doc.html", doc);
+                    File.WriteAllText(Path.GetDirectoryName(path_to_file) + "\\" + title + "_doc.html", doc);
                     saved = true;
                     ErrorMessage.Text = "[#] File Saved!";
 
@@ -505,11 +506,11 @@ namespace MultiPortBreakDown
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
-            if (PathToFile.Text.Equals(""))
+            if (path_to_file.Equals(""))
                 return;
             if (saved)
             {
-                PathToFile.Text = "";
+                UpdateFilePath("");
                 File.WriteAllText(@"file_path.txt", "");
             }
             else
@@ -518,7 +519,7 @@ namespace MultiPortBreakDown
                 if (dialogResult == DialogResult.Yes)
                 {
                     //SaveButton_Click(sender, e);
-                    PathToFile.Text = "";
+                    UpdateFilePath("");
                     File.WriteAllText(@"file_path.txt", "");
                 }
                 else if (dialogResult == DialogResult.No)
@@ -622,6 +623,12 @@ namespace MultiPortBreakDown
         {
             this.AutoSize = true;
             ColorInValid();
+        }
+
+        private void UpdateFilePath(string pathString)
+        {
+            path_to_file = pathString;
+            PathToFile.Text = "Path to file: " + pathString;
         }
     }
 }
