@@ -614,17 +614,20 @@ namespace MultiPortBreakDown
             UpdateDataBase();
         }
 
-        private void frm_sizeChanged(object sender, EventArgs e)
-        {
-            dataGridView1.Size = new Size(this.Size.Width, this.Size.Height - this.panel2.Size.Height - 45);
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             this.AutoSize = true;
             ColorInValid();
         }
 
+        private void frm_sizeChanged(object sender, EventArgs e)
+        {
+            Size marginned_panel_size = new Size(this.Width - 40, Height - 80);
+            Size table_size = new Size(marginned_panel_size.Width, marginned_panel_size.Height - 295);
+            panel2.Size = marginned_panel_size;
+            dataGridView1.Size = table_size;
+            ClearButton.Location = new Point(Width - 70, ClearButton.Location.Y);
+        }
         private void UpdateFilePath(string pathString)
         {
             path_to_file = pathString;
