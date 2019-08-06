@@ -102,5 +102,8 @@
   <ItemGroup>
     <None Include="Clearall.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="open.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

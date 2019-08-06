@@ -13,14 +13,14 @@ using static MultiPortBreakDown.PortEntry;
 
 namespace MultiPortBreakDown
 {
-    public partial class Form1 : Form
+    public partial class MultiPortBreakDown : Form
     {
         public XmlSerializer xs;
         List<PortEntry> Ports;
         bool saved = true;
         string path_to_file = "";
 
-        public Form1()
+        public MultiPortBreakDown()
         {
             InitializeComponent();
             Ports = new List<PortEntry>();
@@ -507,11 +507,12 @@ namespace MultiPortBreakDown
         private void CloseButton_Click(object sender, EventArgs e)
         {
             if (path_to_file.Equals(""))
-                return;
+                Close();
             if (saved)
             {
                 UpdateFilePath("");
-                File.WriteAllText(@"file_path.txt", "");
+                UpdateDataBase();
+                Close();
             }
             else
             {
@@ -520,7 +521,7 @@ namespace MultiPortBreakDown
                 {
                     //SaveButton_Click(sender, e);
                     UpdateFilePath("");
-                    File.WriteAllText(@"file_path.txt", "");
+                    Close();
                 }
                 else if (dialogResult == DialogResult.No)
                 {
