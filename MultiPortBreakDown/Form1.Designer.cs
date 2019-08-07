@@ -64,22 +64,22 @@ namespace MultiPortBreakDown
             this.Delete = new System.Windows.Forms.Button();
             this.R_WCombo = new System.Windows.Forms.ComboBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.ErrorMessage = new System.Windows.Forms.RichTextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ClearButton = new System.Windows.Forms.Button();
             this.UnCommentButton = new System.Windows.Forms.Button();
             this.CommentButton = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openManualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ErrorMessage = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
@@ -441,18 +441,9 @@ namespace MultiPortBreakDown
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // ErrorMessage
-            // 
-            this.ErrorMessage.Location = new System.Drawing.Point(75, 242);
-            this.ErrorMessage.Margin = new System.Windows.Forms.Padding(1);
-            this.ErrorMessage.Name = "ErrorMessage";
-            this.ErrorMessage.ReadOnly = true;
-            this.ErrorMessage.Size = new System.Drawing.Size(141, 19);
-            this.ErrorMessage.TabIndex = 60;
-            this.ErrorMessage.Text = "";
-            // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.ErrorMessage);
             this.panel2.Controls.Add(this.panel3);
             this.panel2.Controls.Add(this.panel1);
             this.panel2.Controls.Add(this.ClearButton);
@@ -465,7 +456,6 @@ namespace MultiPortBreakDown
             this.panel2.Controls.Add(this.label10);
             this.panel2.Controls.Add(this.CommentButton);
             this.panel2.Controls.Add(this.searchBox);
-            this.panel2.Controls.Add(this.ErrorMessage);
             this.panel2.Location = new System.Drawing.Point(15, 27);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1075, 560);
@@ -513,50 +503,6 @@ namespace MultiPortBreakDown
             this.panel1.Size = new System.Drawing.Size(288, 137);
             this.panel1.TabIndex = 64;
             // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.helpToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1099, 24);
-            this.menuStrip1.TabIndex = 65;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveAsToolStripMenuItem,
-            this.saveToolStripMenuItem,
-            this.openToolStripMenuItem,
-            this.exitToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveToolStripMenuItem.Text = "Save As";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveAsButton_Click);
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openManualToolStripMenuItem,
-            this.aboutToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.aboutToolStripMenuItem.Text = "About";
-            // 
             // ClearButton
             // 
             this.ClearButton.Image = global::MultiPortBreakDown.Properties.Resources.Clearall;
@@ -587,19 +533,48 @@ namespace MultiPortBreakDown
             this.CommentButton.UseVisualStyleBackColor = true;
             this.CommentButton.Click += new System.EventHandler(this.CommentButton_Click);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.helpToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1099, 24);
+            this.menuStrip1.TabIndex = 65;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveAsToolStripMenuItem,
+            this.saveToolStripMenuItem,
+            this.openToolStripMenuItem,
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Image = global::MultiPortBreakDown.Properties.Resources.save;
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.saveAsToolStripMenuItem.Text = "Save";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveButton_Click);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.saveToolStripMenuItem.Text = "Save As";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveAsButton_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Image = global::MultiPortBreakDown.Properties.Resources.open;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenButton_Click);
             // 
@@ -607,16 +582,43 @@ namespace MultiPortBreakDown
             // 
             this.exitToolStripMenuItem.Image = global::MultiPortBreakDown.Properties.Resources.Close;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.exitToolStripMenuItem.Text = "Close";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.CloseButton_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openManualToolStripMenuItem,
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
             // 
             // openManualToolStripMenuItem
             // 
             this.openManualToolStripMenuItem.Image = global::MultiPortBreakDown.Properties.Resources.help;
             this.openManualToolStripMenuItem.Name = "openManualToolStripMenuItem";
-            this.openManualToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.openManualToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openManualToolStripMenuItem.Text = "Manual";
+            this.openManualToolStripMenuItem.Click += new System.EventHandler(this.help_MenuButtonClick);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.About_MenuButtonClick);
+            // 
+            // ErrorMessage
+            // 
+            this.ErrorMessage.AutoSize = true;
+            this.ErrorMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ErrorMessage.Location = new System.Drawing.Point(35, 222);
+            this.ErrorMessage.Name = "ErrorMessage";
+            this.ErrorMessage.Size = new System.Drawing.Size(77, 18);
+            this.ErrorMessage.TabIndex = 66;
+            this.ErrorMessage.Text = "Message: ";
             // 
             // MultiPortBreakDown
             // 
@@ -684,7 +686,6 @@ namespace MultiPortBreakDown
         private System.Windows.Forms.Button Delete;
         private System.Windows.Forms.ComboBox R_WCombo;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.RichTextBox ErrorMessage;
         private System.Windows.Forms.Button CommentButton;
         private System.Windows.Forms.Button UnCommentButton;
         private System.Windows.Forms.Panel panel2;
@@ -699,6 +700,7 @@ namespace MultiPortBreakDown
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openManualToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.Label ErrorMessage;
     }
 }
 

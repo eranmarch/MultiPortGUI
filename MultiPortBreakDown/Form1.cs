@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using System.Diagnostics;
+
 using static MultiPortBreakDown.PortEntry;
 
 namespace MultiPortBreakDown
@@ -162,7 +164,7 @@ namespace MultiPortBreakDown
             AddEntryToTable(entry);
             searchBox.Text = "";
             UpdateTable(Ports);
-            ErrorMessage.Text = "[#] Port named " + PortNameText.Text + " was added";
+            ErrorMessage.Text = "Message: Port named " + PortNameText.Text + " was added";
             InitFields();
             saved = false;
         }
@@ -172,6 +174,11 @@ namespace MultiPortBreakDown
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                DialogResult res = MessageBox.Show("Whould you like to clear the current table (without saving!)?", "Warning", MessageBoxButtons.YesNo);
+                if (res == DialogResult.Yes)
+                {
+                    Clear_Click(sender, e);
+                }
                 FileValidator fv = new FileValidator(openFileDialog1.FileName);
                 if (fv.IsFileValid())
                 {
@@ -464,7 +471,7 @@ namespace MultiPortBreakDown
                     //MessageBox.Show(Path.GetDirectoryName(PathToFile.Text) + "\\" + title + "_doc.txt");
                     File.WriteAllText(Path.GetDirectoryName(path_to_file) + "\\" + title + "_doc.html", doc);
                     saved = true;
-                    ErrorMessage.Text = "[#] File Saved!";
+                    ErrorMessage.Text = "Message: File Saved!";
 
                 }
                 catch
@@ -575,12 +582,30 @@ namespace MultiPortBreakDown
                 numericUpDown2.Value = index;
 
                 if (pe.GetIsComment())
-                    ErrorMessage.Text = "> ";
+                    ErrorMessage.Text = "Message: ";
                 else if (!pe.GetValid())
-                    ErrorMessage.Text = "[@] " + pe.GetReason();
+                    ErrorMessage.Text = "Message: " + pe.GetReason();
                 else
-                    ErrorMessage.Text = "> ";
+                    ErrorMessage.Text = "Message: ";
             }
+        }
+
+        private void help_MenuButtonClick(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start(@"man\\MultiPortBreakDownMan.pdf");
+            }
+            catch (IOException t)
+            {
+                MessageBox.Show("Could not find manual");
+            }
+        }
+
+        private void About_MenuButtonClick(object senedr, EventArgs e)
+        {
+            MessageBox.Show(
+                    "MultiPortPackageAutomation Version 1.0\nCreated By Eran Marchesky and Eli Zeltser as a final project\n\nAdvisors: Dan Shalom and Eli Parente");
         }
 
         private void DataGridView1_KeyUp(object sender, KeyEventArgs e)
