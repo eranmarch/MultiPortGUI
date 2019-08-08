@@ -102,9 +102,18 @@ namespace MultiPortBreakDown
             for (int i = 0; i < lines.Length; i++)
             {
                 // Skip empty lines
-                lines_correct[j] = RemoveComment(lines_correct[j]);
-                while (j < lines_correct.Length && lines_correct[j].Equals(""))
+                //lines_correct[j] = RemoveComment(lines_correct[j]);
+                bool b1 = string.IsNullOrWhiteSpace(lines_correct[j]);
+                bool b2 = Regex.Match(lines_correct[j], @"^[ \t]*--(.*)").Success;
+                while (j < lines_correct.Length && (lines_correct[j].Equals("") || b1 || b2))
+                {
                     j++;
+                    if (j == lines_correct.Length - 1)
+                        break;
+                    b1 = string.IsNullOrWhiteSpace(lines_correct[j]);
+                    //b1 = Regex.Match(lines_correct[j], @"^[\r\n]*").Success;
+                    b2 = Regex.Match(lines_correct[j], @"^[ \t]*--(.*)").Success;
+                }
                 // Finished current state
                 if (j == lines_correct.Length)
                     break;
@@ -121,7 +130,7 @@ namespace MultiPortBreakDown
                 if (run_state == (int)Cmp_mod.Port_names || run_state == (int)Cmp_mod.Port_entrys)
                 {
                     int k;
-                    for (k = i + 1; k < lines.Length && !lines_correct[j - 1].Equals(lines[k]); k++)
+                    for (k = i; k < lines.Length && !lines_correct[j - 1].Equals(lines[k]); k++)
                     {
                         Match result = Regex.Match(lines[k], pattern);
                         if (result.Success)
@@ -160,6 +169,10 @@ namespace MultiPortBreakDown
                             }
                             else
                             {
+                                b1 = string.IsNullOrWhiteSpace(lines[k]);
+                                b2 = Regex.Match(lines[k], @"^[ \t]*--(.*)").Success;
+                                if (k < lines.Length && (lines[k].Equals("") || b1 || b2))
+                                    continue;
                                 MessageBox.Show("COMPILATION 2: Parsing error at line " + (k + 1));
                                 Console.WriteLine("COMPILATION 2: Parsing error at line " + (k + 1) + "\nFinishing compilation....");
                                 return false;
@@ -176,9 +189,19 @@ namespace MultiPortBreakDown
                 }
                 else
                 {
-                    lines[i] = RemoveComment(lines[i]);
-                    while (i < lines.Length && lines[i].Equals(""))
+                    //lines[i] = RemoveComment(lines[i]);
+                    b1 = string.IsNullOrWhiteSpace(lines[i]);
+                    b2 = Regex.Match(lines[i], @"^[ \t]*--(.*)").Success;
+                    bool b3 = Regex.Match(lines[i], @"^use(.)*").Success || Regex.Match(lines[i], @"^library(.*)").Success;
+                    while (i < lines.Length && (lines[i].Equals("") || b1 || b2 || b3))
+                    {
                         i++;
+                        if (i == lines.Length - 1)
+                            break;
+                        b1 = string.IsNullOrWhiteSpace(lines[i]);
+                        b2 = Regex.Match(lines[i], @"^[ \t]*--(.*)").Success;
+                        b3 = Regex.Match(lines[i], @"^use(.)*").Success || Regex.Match(lines[i], @"^library(.*)").Success;
+                    }
                     if (!lines_correct[j].Equals(lines[i]))
                     {
                         MessageBox.Show("COMPILATION 3: Invalid file\n" + lines[i] + "\n" + lines_correct[j]);
